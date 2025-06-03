@@ -17,5 +17,10 @@ return [
         "email" => "info@stabinger.it",
         "phone" => "+390474710352",
     ],
+    [
+        "name" => "5.20",
+        "email" => null,
+        "phone" => "+390471260221",
+    ],
 
 ];

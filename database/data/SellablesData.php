@@ -4,7 +4,7 @@ return [
     
     [
         "name" => "Espresso",
-        "description" => "Il caffé italiano per eccellenza, intenso e veloce.",
+        "description" => "Il caffè italiano per eccellenza, intenso e veloce.",
         "price" => 1.00,
         "image" => null,
         "is_visible" => true,
@@ -27,8 +27,8 @@ return [
         "category_id" => 1,
     ],
     [
-        "name" => "Caffé d'Orzo",
-        "description" => "Alternativa al caffé, senza caffeina.",
+        "name" => "Caffè d'Orzo",
+        "description" => "Alternativa al caffè, senza caffeina.",
         "price" => 1.30,
         "image" => null,
         "is_visible" => true,
@@ -36,7 +36,7 @@ return [
     ],
     [
         "name" => "Ginseng",
-        "description" => "Bevanda dolce e cremosa a base di caffé e ginseng.",
+        "description" => "Bevanda dolce e cremosa a base di caffè e ginseng.",
         "price" => 1.50,
         "image" => null,
         "is_visible" => true,
@@ -363,7 +363,7 @@ return [
         "category_id" => 6,
     ],
     [
-        "name" => "Vin Brulé",
+        "name" => "Vin Brulè",
         "description" => "Vino rosso caldo con spezie, ideale d'inverno.",
         "price" => 5.00,
         "image" => null,
@@ -379,7 +379,7 @@ return [
         "category_id" => 7,
     ],
     [
-        "name" => "Pizza Margherita",
+        "name" => "Pizzetta Margherita",
         "description" => "Mini pizza con pomodoro e mozzarella.",
         "price" => 4.00,
         "image" => null,
