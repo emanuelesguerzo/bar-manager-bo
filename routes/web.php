@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SellableController;
+use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +26,11 @@ Route::middleware(["auth", "verified"])
     ->prefix("admin")
     ->group( function () {
 
+        Route::resource("sellables", SellableController::class);
+        Route::resource("categories", CategoryController::class);
+        Route::resource("suppliers", SupplierController::class);
         Route::resource("products", ProductController::class);
-        
+
     });
 
 require __DIR__.'/auth.php';

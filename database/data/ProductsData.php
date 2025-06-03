@@ -5,13 +5,13 @@ return [
     [
         "name" => "",
         "brand" => "",
-        "description" => "",
         "price" => 1.00,
-        "quantity" => 0,
-        "is_available" => true,
-        "is_visible" => true,
+        "units_in_stock" => 0,
+        "stock_ml" => null,
+        "stock_g" => null,
+        "unit_size_ml" => null,
+        "unit_size_g" => null,
         "image" => null,
-        "category_id" => 1,
         "supplier_id" => 1,
     ],
 
