@@ -29,6 +29,13 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $allowedEmails = explode(',', env('ALLOWED_EMAILS'));
+        if (!in_array($request->email, $allowedEmails)) {
+            return back()->withErrors([
+                'email' => 'Registrazione non autorizzata per questo indirizzo email.',
+            ]);
+        }
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],

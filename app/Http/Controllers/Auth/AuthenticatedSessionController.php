@@ -24,6 +24,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+
+        $allowedEmails = explode(',', env('ALLOWED_EMAILS'));
+
+        if (!in_array($request->email, $allowedEmails)) {
+            return back()->withErrors([
+                'email' => 'Accesso non autorizzato.',
+            ]);
+        }
+        
         $request->authenticate();
 
         $request->session()->regenerate();

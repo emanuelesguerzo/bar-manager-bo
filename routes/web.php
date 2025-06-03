@@ -5,10 +5,14 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SellableController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route("dashboard");
+    }
+    return view('/auth/login');
 });
 
 Route::get('/dashboard', function () {

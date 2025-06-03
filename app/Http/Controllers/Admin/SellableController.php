@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Sellable;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,18 @@ class SellableController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $categories = Category::all();
+        $query = Sellable::query();
+
+        if ($search = $request->input('search')) {
+            $query->where('name', 'like', "%$search%");
+        }
+
+        $sellables = $query->paginate(8);
+
+        return view("admin.sellables.index", compact("sellables", "categories"));
     }
 
     /**

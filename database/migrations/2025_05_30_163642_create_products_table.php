@@ -16,13 +16,14 @@ return new class extends Migration
             $table->id();
             
             $table->string("name");
+            $table->string('slug')->unique();
             $table->string("brand")->nullable();
             $table->decimal("price", 6, 2);
             $table->bigInteger("units_in_stock");
-            $table->bigInteger("stock_ml");
-            $table->bigInteger("stock_g");
-            $table->bigInteger("unit_size_ml");
-            $table->bigInteger("unit_size_g");
+            $table->bigInteger("stock_ml")->nullable();
+            $table->bigInteger("stock_g")->nullable();
+            $table->bigInteger("unit_size_ml")->nullable();
+            $table->bigInteger("unit_size_g")->nullable();
             $table->string("image")->nullable();
             $table->foreignId("supplier_id")->nullable()->constrained()->onDelete("set null");
 
