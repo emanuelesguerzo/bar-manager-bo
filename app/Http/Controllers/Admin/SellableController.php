@@ -76,7 +76,7 @@ class SellableController extends Controller
      */
     public function show(Sellable $sellable)
     {
-        //
+        return view("admin.sellables.show", compact("sellable"));
     }
 
     /**
