@@ -84,7 +84,9 @@ class SellableController extends Controller
      */
     public function edit(Sellable $sellable)
     {
-        //
+        $categories = Category::all();
+
+        return view("admin.sellables.edit", compact("sellable", "categories"));
     }
 
     /**
@@ -92,7 +94,41 @@ class SellableController extends Controller
      */
     public function update(Request $request, Sellable $sellable)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0|max:9999.99',
+            'image' => 'nullable|image',
+            'category_id' => 'nullable|exists:categories,id',
+        ]);
+
+        $data = $request->all();
+
+        if ($sellable->name !== $data["name"]) {
+            $sellable->slug = Str::slug($data["name"]);
+        }
+
+        $sellable->name = $data["name"];
+        $sellable->description = $data["description"];
+        $sellable->price = $data["price"];
+        $sellable->is_visible = $request->has("is_visible");
+        $sellable->category_id = $data["category_id"];
+
+
+        if ($request->hasFile('image')) {
+            // Se esiste un'immagine precedente, la elimino
+            if ($sellable->image && Storage::disk('public')->exists($sellable->image)) {
+                Storage::disk('public')->delete($sellable->image);
+            }
+
+            // Carico la nuova immagine
+            $img_url = Storage::disk('public')->put('sellables', $data['image']);
+            $sellable->image = $img_url;
+        }
+
+        $sellable->save();
+
+        return redirect()->route("admin.sellables.show", $sellable)->with('success', 'Prodotto aggiornato con successo!');
     }
 
     /**
@@ -100,6 +136,6 @@ class SellableController extends Controller
      */
     public function destroy(Sellable $sellable)
     {
-        //
+
     }
 }

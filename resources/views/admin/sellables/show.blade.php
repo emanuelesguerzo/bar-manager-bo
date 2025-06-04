@@ -4,8 +4,14 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="mt-4">
-            <a href="{{ url()->previous() ?? route('admin.sellables.index') }}" class="btn btn-secondary mb-3">← Torna indietro</a>
+            <a href="{{ route('admin.sellables.index') }}" class="btn btn-secondary mb-3">← Torna indietro</a>
         </div>
         <div class="card h-100 d-flex flex-column mt-1">
             @if ($sellable->image)
@@ -23,7 +29,7 @@
                 <li class="list-group-item">{{ $sellable->category->name }}</li>
             </ul>
             <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
+                <a class="btn btn-outline-success" href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
                 <a href="#" class="card-link">Another link</a>
             </div>
         </div>
