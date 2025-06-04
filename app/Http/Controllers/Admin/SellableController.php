@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Sellable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class SellableController extends Controller
 {
@@ -31,7 +33,9 @@ class SellableController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view("admin.sellables.create", compact("categories"));
     }
 
     /**
@@ -39,7 +43,32 @@ class SellableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required|string|max:255",
+            "description" => "nullable|string",
+            "price" => "required|numeric|min:0|max:9999.99",
+            "image" => "nullable|image",
+            "category_id" => "nullable|exists:categories,id",
+        ]);
+
+        $data = $request->all();
+
+        $newSellable = new Sellable();
+        $newSellable->name = $data["name"];
+        $newSellable->slug = Str::slug($data['name']);
+        $newSellable->description = $data["description"];
+        $newSellable->price = $data["price"];
+        $newSellable->is_visible = $request->has("is_visible");
+        $newSellable->category_id = $data["category_id"] ?? null;
+
+        if ($request->hasFile("image")) {
+            $img_url = Storage::disk("public")->put("sellables", $data["image"]);
+            $newSellable->image = $img_url;
+        }
+
+        $newSellable->save();
+
+        return redirect()->route('admin.sellables.index')->with('success', 'Prodotto creato con successo!');
     }
 
     /**
