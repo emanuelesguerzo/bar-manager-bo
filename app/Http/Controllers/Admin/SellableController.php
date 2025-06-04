@@ -44,7 +44,7 @@ class SellableController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required|string|max:255",
+            'name' => 'required|string|max:255|unique:sellables,name',
             "description" => "nullable|string",
             "price" => "required|numeric|min:0|max:9999.99",
             "image" => "nullable|image",
@@ -76,7 +76,19 @@ class SellableController extends Controller
      */
     public function show(Sellable $sellable)
     {
-        return view("admin.sellables.show", compact("sellable"));
+        $previous = Sellable::where('id', '<', $sellable->id)->orderBy('id', 'desc')->first();
+        $next = Sellable::where('id', '>', $sellable->id)->orderBy('id')->first();
+
+        // Se siamo al primo o all'ultimo cicliamo
+        if (!$previous) {
+            $previous = Sellable::orderBy('id', 'desc')->first();
+        }
+
+        if (!$next) {
+            $next = Sellable::orderBy('id')->first();
+        }
+
+        return view("admin.sellables.show", compact("sellable", "previous", "next"));
     }
 
     /**
@@ -137,5 +149,12 @@ class SellableController extends Controller
     public function destroy(Sellable $sellable)
     {
 
+        if ($sellable->image && Storage::disk('public')->exists($sellable->image)) {
+            Storage::disk('public')->delete($sellable->image);
+        }
+
+        $sellable->delete();
+
+        return redirect()->route("admin.sellables.index");
     }
 }

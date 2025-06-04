@@ -15,9 +15,13 @@
         </div>
         <div class="card h-100 d-flex flex-column mt-1">
             @if ($sellable->image)
-                <div class="card-header">
-                    <img class="img-fluid w-100" style="width: 80%; height: 500px; object-fit: cover; object-position: center;"
-                        src="{{ asset('storage/' . $sellable->image) }}" alt="Immagine della pagina {{ $sellable->name }}">
+                <div class="card-header text-center">
+                    <img 
+                        class="img-fluid rounded"
+                        style="max-width: 100%; width: 400px; object-fit: cover;"
+                        src="{{ asset('storage/' . $sellable->image) }}" 
+                        alt="Immagine della pagina {{ $sellable->name }}"
+                    >
                 </div>
             @endif
             <div class="card-body">
@@ -30,9 +34,20 @@
             </ul>
             <div class="card-body">
                 <a class="btn btn-outline-success" href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
-                <a href="#" class="card-link">Another link</a>
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    data-bs-target="#destroyModal-{{ $sellable->id }}">
+                    Elimina
+                </button>
             </div>
         </div>
-
+        <div class="d-flex justify-content-between my-4">
+            <a href="{{ route('admin.sellables.show', $previous->slug) }}" class="btn btn-outline-secondary">
+                ← {{ $previous->name }}
+            </a>
+            <a href="{{ route('admin.sellables.show', $next->slug) }}" class="btn btn-outline-secondary">
+                {{ $next->name }} →
+            </a>
+        </div>
     </div>
+    <x-modal.delete-sellable :sellable="$sellable" />
 @endsection
