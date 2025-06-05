@@ -31,7 +31,7 @@ Route::middleware(["auth", "verified"])
     ->group( function () {
 
         Route::resource("sellables", SellableController::class);
-        Route::resource("categories", CategoryController::class);
+        Route::resource("categories", CategoryController::class)->parameters(['categories' => 'category:slug',]);
         Route::resource("suppliers", SupplierController::class);
         Route::resource("products", ProductController::class);
 

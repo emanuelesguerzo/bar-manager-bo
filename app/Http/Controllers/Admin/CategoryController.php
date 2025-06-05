@@ -56,7 +56,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $sellables = $category->sellables()->orderBy('name')->get();
+
+        return view('admin.categories.show', compact('category', 'sellables'));
     }
 
     /**
@@ -64,7 +66,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view("admin.categories.edit", compact("category"));
     }
 
     /**
@@ -76,6 +78,19 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
+
+        $data = $request->all();
+
+        if ($category->name !== $data["name"]) {
+            $category->slug = Str::slug($data["name"]);
+        }
+
+        $category->name = $data["name"];
+        $category->description = $data["description"];
+
+        $category->save();
+
+        return redirect()->route("admin.categories.index", $category)->with('success', 'Categoria aggiornata con successo!');
     }
 
     /**

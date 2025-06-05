@@ -25,6 +25,7 @@
                         @if ($category->description)
                             <div class="card-body d-flex flex-column">
                                <p>{{ $category["description"] }}</p>
+                               <a href="{{ route('admin.categories.show', $category->slug) }}" class="">Vedi Prodotti associati</a>
                             </div>
                         @else
                             <div class="card-body text-muted fst-italic">
