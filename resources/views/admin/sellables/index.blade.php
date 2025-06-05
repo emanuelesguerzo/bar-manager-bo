@@ -4,25 +4,57 @@
 
 @section('content')
     <div class="container mt-3">
+
+        {{-- Alert Successo --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
+        {{-- Titolo Principale --}}
         <h1 class="my-4">@yield('title')</h1>
+
+        {{-- Ricerca --}}
         <form method="GET" action="{{ route('admin.sellables.index') }}" class="mb-4">
-            <div class="input-group">
-                <input type="text" name="search" value="{{ request('search') }}" class="form-control"
-                    placeholder="Cerca per nome...">
-                <button class="btn btn-primary" type="submit">Cerca</button>
+            <div class="row g-2 align-items-end">
+
+                {{-- Campo ricerca --}}
+                <div class="col-md-5">
+                    <label for="search" class="form-label">Cerca per nome</label>
+                    <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control"
+                        placeholder="Es: Cappuccino...">
+                </div>
+
+                {{-- Filtro categoria --}}
+                <div class="col-md-5">
+                    <label for="category_id" class="form-label">Categoria</label>
+                    <select name="category_id" id="category_id" class="form-select">
+                        <option value="">Tutte le categorie</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Bottoni Cerca e Reset --}}
+                <div class="col-md-2 d-flex gap-2">
+                    <button class="btn btn-primary w-50" type="submit">Cerca</button>
+                    <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary w-50">Reset</a>
+                </div>
             </div>
         </form>
 
+        {{-- Aggiungi Nuovo --}}
         <div>
             <a class="btn btn-primary mb-3" href="{{ route('admin.sellables.create') }}">+ Aggiungi un nuovo articolo</a>
         </div>
 
+        {{-- Grid --}}
         <div class="row">
             @foreach ($sellables as $sellable)
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
@@ -46,7 +78,8 @@
                                     class="">Dettagli</a></li>
                         </ul>
                         <div class="card-footer d-flex justify-content-between">
-                            <a class="btn btn-outline-success" href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
+                            <a class="btn btn-outline-success"
+                                href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                 data-bs-target="#destroyModal-{{ $sellable->id }}">
                                 Elimina
@@ -56,6 +89,11 @@
                 </div>
                 <x-modal.delete-sellable :sellable="$sellable" />
             @endforeach
+            @if ($sellables->isEmpty())
+                <div class="alert alert-warning text-center my-4">
+                    Nessun prodotto corrisponde alla ricerca o alla categoria selezionata.
+                </div>
+            @endif
         </div>
         {{ $sellables->withQueryString()->links() }}
     </div>

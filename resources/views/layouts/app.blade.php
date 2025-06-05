@@ -44,6 +44,9 @@
                             <a class="nav-link" href="{{url('/admin/sellables') }}">{{ __('Menù') }}</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{url('/admin/products') }}">{{ __('Prodotti') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{url('/admin/suppliers') }}">{{ __('Fornitori') }}</a>
                         </li>
                         <li class="nav-item">

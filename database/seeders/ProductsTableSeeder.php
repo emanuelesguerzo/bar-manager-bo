@@ -22,6 +22,7 @@ class ProductsTableSeeder extends Seeder
 
             $newProduct->name = $product["name"];
             $newProduct->slug = Str::slug($product["name"]);
+            $newProduct->brand = $product["brand"];
             $newProduct->price = $product["price"];
             $newProduct->units_in_stock = $product["units_in_stock"];
             $newProduct->stock_ml = $product["stock_ml"];

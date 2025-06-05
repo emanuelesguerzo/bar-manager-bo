@@ -19,8 +19,14 @@ class SellableController extends Controller
         $categories = Category::all();
         $query = Sellable::query();
 
+        // Filtro per nome
         if ($search = $request->input('search')) {
             $query->where('name', 'like', "%$search%");
+        }
+
+        // Filtro per categoria 
+        if ($categoryId = $request->input('category_id')) {
+            $query->where('category_id', $categoryId);
         }
 
         $sellables = $query->paginate(8);
