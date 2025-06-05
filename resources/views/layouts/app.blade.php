@@ -46,6 +46,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/admin/suppliers') }}">{{ __('Fornitori') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/admin/categories') }}">{{ __('Categorie') }}</a>
+                        </li>
                         @endauth
                     </ul>
 
