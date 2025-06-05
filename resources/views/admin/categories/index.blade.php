@@ -3,6 +3,12 @@
 
 @section('content')
     <div class="container">
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 {{ session('success') }}
@@ -24,8 +30,9 @@
                         </div>
                         @if ($category->description)
                             <div class="card-body d-flex flex-column">
-                               <p>{{ $category["description"] }}</p>
-                               <a href="{{ route('admin.categories.show', $category->slug) }}" class="">Vedi Prodotti associati</a>
+                                <p>{{ $category['description'] }}</p>
+                                <a href="{{ route('admin.categories.show', $category->slug) }}" class="">Vedi Prodotti
+                                    associati</a>
                             </div>
                         @else
                             <div class="card-body text-muted fst-italic">
@@ -33,7 +40,8 @@
                             </div>
                         @endif
                         <div class="card-footer d-flex justify-content-between">
-                            <a class="btn btn-outline-success" href="{{ route('admin.categories.edit', $category) }}">Modifica</a>
+                            <a class="btn btn-outline-success"
+                                href="{{ route('admin.categories.edit', $category) }}">Modifica</a>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                 data-bs-target="#destroyModal-{{ $category->id }}">
                                 Elimina
@@ -41,6 +49,7 @@
                         </div>
                     </div>
                 </div>
+                <x-modal.delete-category :category="$category" />
             @endforeach
         </div>
     </div>

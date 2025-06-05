@@ -98,6 +98,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if ($category->sellables()->count() > 0) {
+            return redirect()->back()->with('error', 'Non puoi eliminare una categoria che ha prodotti associati.');
+        }
+        
+        $category->delete();
+
+        return redirect()->route("admin.categories.index")->with("success", "Categoria cancellata con successo!");
     }
 }
