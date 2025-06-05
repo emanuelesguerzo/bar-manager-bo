@@ -39,9 +39,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/') }}">{{ __('Home') }}</a> 
                         </li>
+                        @auth
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/admin/sellables') }}">{{ __('Menù') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/admin/suppliers') }}">{{ __('Fornitori') }}</a>
+                        </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
