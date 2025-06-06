@@ -1,59 +1,78 @@
 @extends('layouts.app')
 
-@section('title', 'Inserisci un nuovo prodotto nel menù')
+@section('title', 'Aggiungi un nuovo prodotto al menù')
 
 @section('content')
-    <div class="container">
-        <div class="mt-4">
-            <a class=" btn btn-primary" href="{{ route('admin.sellables.index') }}">Torna al menù</a>
-        </div>
+    <div class="container mt-3">
 
-        <h1 class="mt-3">@yield('title')</h1>
-        @error('name')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <form action="{{ route('admin.sellables.store') }}" method="POST" enctype="multipart/form-data">
+        {{-- Bottone Ritorno --}}
+        <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary mt-3">
+            <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
+        </a>
+
+        {{-- Titolo Pagina --}}
+        <h1 class="my-4">@yield('title')</h1>
+
+        {{-- Form --}}
+        <form class="border rounded p-3" action="{{ route('admin.sellables.store') }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
 
-            <div class="form-control d-flex flex-column mt-4 mb-2">
-
-                {{-- Nome Prodotto --}}
-                <label class="mb-2 fs-5" for="name">Nome del Prodotto</label>
-                <input class="mb-3" type="text" name="name" id="name" maxlength="255" value="{{ old('name') }}" required>
-
-                {{-- Descrizione Prodotto --}}
-                <label class="mb-2 fs-5" for="description">Descrizione del Prodotto</label>
-                <textarea class="mb-3" type="text" name="description" id="description" rows="2">{{ old('description') }}</textarea>
-
-                {{-- Prezzo Prodotto --}}
-                <label class="mb-2 fs-5" for="price">Prezzo del Prodotto</label>
-                <input class="mb-3" type="number" name="price" id="price" step="0.01" min="0"
-                    max="9999.99" value="{{ old('price') }}" required>
-
-                {{-- Immagine Prodotto --}}
-                <label class="mb-2 fs-5" for="image">Immagine del Prodotto</label>
-                <input class="mb-3" type="file" name="image" id="image">
-
-                {{-- Visibilità del prodotto --}}
-                <label class="mb-2 fs-5" for="form-check">Visibilità prodotto</label>
-                <div class="form-check">
-                    <input type="checkbox" name="is_visible" id="is_visible" class="form-check-input" {{ old('is_visible', true) ? 'checked' : '' }}>
-                    <label class="mb-2" for="is_visible" class="form-check-label">Visibile nel menù</label>
-                </div>
-
-                {{-- Categoria del Prodotto --}}
-                <label class="mb-2 fs-5" for="category_id">Categoria Prodotto</label>
-                <select class="mb-3" name="category_id" id="category_id">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                    @endforeach
-                </select>
-
+            {{-- Nome Prodotto --}}
+            <div class="mb-3">
+                <label class="form-label label-required" for="name">Nome del prodotto</label>
+                <input class="form-control" type="text" name="name" id="name" maxlength="255"
+                    value="{{ old('name') }}" placeholder="Es: Frappè" required>
             </div>
 
-            {{-- Salva Progetto --}}
-            <input class="btn btn-primary" type="submit" value="Salva">
+            {{-- Prezzo Prodotto --}}
+            <div class="mb-3">
+                <label class="form-label label-required" for="price">Prezzo (€)</label>
+                <input class="form-control" type="number" name="price" id="price" step="0.01" min="0"
+                    max="9999.99" value="{{ old('price') }}" placeholder="Es: 3.00" required>
+            </div>
+
+            {{-- Categoria del Prodotto --}}
+            <div class="mb-3">
+                <label class="form-label" for="category_id">Categoria prodotto</label>
+                <select class="form-select" name="category_id" id="category_id">
+                    <option value="">— Seleziona categoria —</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Visibilità del prodotto --}}
+            <div class="mb-3">
+                <label class="form-label" for="form-check">Visibilità prodotto</label>
+                <div class="form-check">
+                    <input type="checkbox" name="is_visible" id="is_visible" class="form-check-input"
+                        {{ old('is_visible', true) ? 'checked' : '' }}>
+                    <label for="is_visible" class="form-check-label">Visibile nel menù</label>
+                </div>
+            </div>
+
+            {{-- Immagine Prodotto --}}
+            <div class="mb-3">
+                <label class="form-label" for="image">Immagine del prodotto</label>
+                <input class="form-control" type="file" name="image" id="image">
+            </div>
+
+            {{-- Descrizione Prodotto --}}
+            <div class="mb-4">
+                <label class="form-label" for="description">Descrizione del prodotto</label>
+                <textarea class="form-control" type="text" name="description" id="description" rows="2"
+                    placeholder="Es: Bevanda a base di gelato">{{ old('description') }}</textarea>
+            </div>
+
+            {{-- Submit --}}
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success w-100">Salva</button>
+            </div>
 
         </form>
+
     </div>
 @endsection

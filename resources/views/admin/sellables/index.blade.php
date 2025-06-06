@@ -7,7 +7,7 @@
 
         {{-- Alert Successo --}}
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -73,7 +73,9 @@
                         </div>
                         <ul class="list-group list-group-flush mt-auto">
                             <li class="list-group-item">Prezzo: {{ $sellable['price'] }} €</li>
-                            <li class="list-group-item">{{ $sellable->category->name }}</li>
+                            @if ($sellable->category)
+                                <li class="list-group-item">{{ $sellable->category->name }}</li>
+                            @endif
                             <li class="list-group-item text-center">
                                 <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
                                     class="btn btn-outline-primary btn-sm w-100">Dettagli</a>

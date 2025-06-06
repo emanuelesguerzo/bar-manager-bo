@@ -168,6 +168,6 @@ class SellableController extends Controller
 
         $sellable->delete();
 
-        return redirect()->route("admin.sellables.index")->with("success", "Prodotto cancellato con successo!");
+        return redirect()->route("admin.sellables.index")->with("success", "Il prodotto $sellable->name è stato cancellato con successo!");
     }
 }
