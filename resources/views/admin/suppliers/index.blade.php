@@ -22,6 +22,12 @@
                         <div class="card-header d-flex align-content-center">
                             <h5 class="mb-0">{{ $supplier['name'] }}</h5>
                         </div>
+                        <div class="card-body">
+                            <a href="{{ route('admin.suppliers.show', $supplier->slug) }}" class="mt-auto">Vedi Prodotti
+                                    associati</a>
+                        </div>
+
+                        
                         @if ($supplier->email || $supplier->phone)
                             <div class="card-body d-flex flex-column">
                                 @if ($supplier->email)

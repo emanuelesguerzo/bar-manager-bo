@@ -61,7 +61,9 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        $products = $supplier->products()->orderBy('name')->get();
+
+        return view('admin.suppliers.show', compact('supplier', 'products'));
     }
 
     /**
