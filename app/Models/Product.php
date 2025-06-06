@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function supplier() {
         return $this->belongsTo(Supplier::class);

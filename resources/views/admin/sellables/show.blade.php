@@ -32,7 +32,7 @@
                 <li class="list-group-item">Prezzo: {{ $sellable['price'] }} €</li>
                 <li class="list-group-item">{{ $sellable->category->name }}</li>
             </ul>
-            <div class="card-body">
+            <div class="card-body d-flex justify-content-between">
                 <a class="btn btn-outline-success" href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                     data-bs-target="#destroyModal-{{ $sellable->id }}">

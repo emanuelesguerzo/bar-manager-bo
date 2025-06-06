@@ -27,8 +27,8 @@
 
                 {{-- Bottoni Cerca e Reset --}}
                 <div class="col-md-2 d-flex gap-2">
-                    <button class="btn btn-primary w-50" type="submit">Cerca</button>
-                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary w-50">Reset</a>
+                    <button class="btn btn-primary" type="submit">Cerca</button>
+                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">Reset</a>
                 </div>
             </div>
         </form>
@@ -98,6 +98,7 @@
                         </div>
                     </div>
                 </div>
+                <x-modal.delete-product :product="$product" />
             @endforeach
             @if ($products->isEmpty())
                 <div class="alert alert-warning text-center my-4">

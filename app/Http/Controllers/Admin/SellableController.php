@@ -134,14 +134,21 @@ class SellableController extends Controller
 
 
         if ($request->hasFile('image')) {
-            // Se esiste un'immagine precedente, la elimino
+            // Cancella l'immagine precedente se esiste
             if ($sellable->image && Storage::disk('public')->exists($sellable->image)) {
                 Storage::disk('public')->delete($sellable->image);
             }
 
-            // Carico la nuova immagine
+            // Salva la nuova immagine
             $img_url = Storage::disk('public')->put('sellables', $data['image']);
             $sellable->image = $img_url;
+        }
+
+        if ($request->has('delete_image')) {
+            if ($sellable->image && Storage::disk('public')->exists($sellable->image)) {
+                Storage::disk('public')->delete($sellable->image);
+            }
+            $sellable->image = null;
         }
 
         $sellable->save();

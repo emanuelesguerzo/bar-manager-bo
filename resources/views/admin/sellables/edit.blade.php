@@ -31,11 +31,16 @@
 
                 {{-- Immagine Prodotto --}}
                 <label class="mb-2 fs-5" for="image">Immagine del Prodotto</label>
-                <input class="mb-3" type="file" name="image" id="image">
+                <input class="form-control mb-2" type="file" name="image" id="image">
                 @if ($sellable->image)
                     <div class="mb-3">
-                        <img src="{{ asset('storage/' . $sellable->image) }}" alt="{{ $sellable->name }}" class="img-fluid"
-                            style="max-height: 200px;">
+                        <p>Immagine attuale:</p>
+                        <img src="{{ asset('storage/' . $sellable->image) }}" alt="{{ $sellable->name }}"
+                            class="img-fluid rounded" style="max-height: 200px;">
+                    </div>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" name="delete_image" id="delete_image" class="form-check-input">
+                        <label for="delete_image" class="form-check-label">Rimuovi immagine</label>
                     </div>
                 @endif
 
@@ -59,7 +64,7 @@
             </div>
 
             {{-- Salva Progetto --}}
-            <input class="btn btn-primary" type="submit" value="Salva">
+            <button type="submit" class="btn btn-success">Salva</button>
 
         </form>
     </div>

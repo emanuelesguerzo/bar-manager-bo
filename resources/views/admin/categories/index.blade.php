@@ -31,7 +31,7 @@
                         @if ($category->description)
                             <div class="card-body d-flex flex-column">
                                 <p>{{ $category['description'] }}</p>
-                                <a href="{{ route('admin.categories.show', $category->slug) }}" class="">Vedi Prodotti
+                                <a href="{{ route('admin.categories.show', $category->slug) }}" class="mt-auto">Vedi Prodotti
                                     associati</a>
                             </div>
                         @else

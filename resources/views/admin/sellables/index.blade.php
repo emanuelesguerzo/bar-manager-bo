@@ -43,8 +43,8 @@
 
                 {{-- Bottoni Cerca e Reset --}}
                 <div class="col-md-2 d-flex gap-2">
-                    <button class="btn btn-primary w-50" type="submit">Cerca</button>
-                    <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary w-50">Reset</a>
+                    <button class="btn btn-primary" type="submit">Cerca</button>
+                    <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary">Reset</a>
                 </div>
             </div>
         </form>
@@ -74,8 +74,10 @@
                         <ul class="list-group list-group-flush mt-auto">
                             <li class="list-group-item">Prezzo: {{ $sellable['price'] }} €</li>
                             <li class="list-group-item">{{ $sellable->category->name }}</li>
-                            <li class="list-group-item"><a href="{{ route('admin.sellables.show', $sellable->slug) }}"
-                                    class="">Dettagli</a></li>
+                            <li class="list-group-item text-center">
+                                <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
+                                    class="btn btn-outline-primary btn-sm w-100">Dettagli</a>
+                            </li>
                         </ul>
                         <div class="card-footer d-flex justify-content-between">
                             <a class="btn btn-outline-success"

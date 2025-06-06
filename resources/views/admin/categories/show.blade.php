@@ -31,11 +31,11 @@
                             alt="Immagine di {{ $sellable->name }}"
                         >
                     @endif
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $sellable->name }}</h5>
-                        <p class="card-text">{{ $sellable->description }}</p>
-                        <p class="card-text"><strong>Prezzo:</strong> {{ $sellable->price }}€</p>
-                        <a href="{{ route('admin.sellables.show', $sellable) }}" class="btn btn-outline-primary">Dettagli</a>
+                        <p class="card-text py-1">{{ $sellable->description }}</p>
+                        <p class="card-text mt-auto"><strong>Prezzo:</strong> {{ $sellable->price }}€</p>
+                        <a href="{{ route('admin.sellables.show', $sellable) }}" class="btn btn-outline-primary mt-auto">Dettagli</a>
                     </div>
                 </div>
             </div>
