@@ -3,21 +3,17 @@
 @section('title', "Prodotti del fornitore $supplier->name")
 
 @section('content')
-    <div class="container">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+    <div class="container mt-3">
 
-        <div class="mt-4">
-            <a href="{{ route('admin.suppliers.index') }}" class="btn btn-secondary mb-3">← Torna indietro</a>
-        </div>
+        {{-- Bottone Ritorno --}}
+        <a href="{{ route('admin.suppliers.index') }}" class="btn btn-outline-secondary mt-3">
+            <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
+        </a>
 
-        <h1 class="mb-4">@yield('title')</h1>
+        {{-- Titolo Pagina --}}
+        <h1 class="my-4">@yield('title')</h1>
 
-        <h4 class="mt-5">Prodotti associati:</h4>
+        {{-- Grid --}}
         <div class="row">
             @forelse ($supplier->products as $product)
                 <div class="col-md-6 col-lg-4 mb-4">
@@ -79,7 +75,9 @@
                 </div>
                 <x-modal.delete-product :product="$product" />
             @empty
-                <p class="text-muted">Nessun prodotto associato a questa categoria.</p>
+                <div class="alert alert-warning text-center my-4">
+                    Nessun prodotto associato a questo fornitore.
+                </div>
             @endforelse
         </div>
     </div>

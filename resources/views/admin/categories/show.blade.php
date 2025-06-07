@@ -3,45 +3,62 @@
 @section('title', "Prodotti della categoria $category->name")
 
 @section('content')
-<div class="container">
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+    <div class="container mt-3">
 
-    <div class="mt-4">
-        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary mb-3">← Torna indietro</a>
-    </div>
 
-    <h1 class="mb-4">@yield("title")</h1>
-    <p class="text-muted">{{ $category->description }}</p>
+        {{-- Bottone Ritorno --}}
+        <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-secondary mt-3">
+            <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
+        </a>
 
-    <h4 class="mt-5">Prodotti associati:</h4>
-    <div class="row">
-        @forelse ($category->sellables as $sellable)
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100">
-                    @if ($sellable->image)
-                        <img 
-                            src="{{ asset('storage/' . $sellable->image) }}"
-                            class="card-img-top"
-                            style="object-fit: cover; height: 200px;"
-                            alt="Immagine di {{ $sellable->name }}"
-                        >
-                    @endif
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $sellable->name }}</h5>
-                        <p class="card-text py-1">{{ $sellable->description }}</p>
-                        <p class="card-text mt-auto"><strong>Prezzo:</strong> {{ $sellable->price }}€</p>
-                        <a href="{{ route('admin.sellables.show', $sellable) }}" class="btn btn-outline-primary mt-auto">Dettagli</a>
+        {{-- Titolo Pagina --}}
+        <h1 class="mt-4 mb-3">@yield('title')</h1>
+
+        {{-- Descrizione Categoria --}}
+        <p class="text-muted mb-4">{{ $category->description }}</p>
+
+        {{-- Grid --}}
+        <div class="row">
+            @forelse ($category->sellables as $sellable)
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 d-flex flex-column justify-content-between">
+                        @if ($sellable->image)
+                            <div class="card-header">
+                                <img class="img-fluid w-100 rounded"
+                                    style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
+                                    src="{{ asset('storage/' . $sellable->image) }}"
+                                    alt="Immagine della pagina {{ $sellable->name }}">
+                            </div>
+                        @endif
+                        <div class="card-body py-2">
+                            <h5 class="card-title">{{ $sellable['name'] }}</h5>
+                            <p class="card-text">{{ $sellable['description'] }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush mt-auto">
+                            <li class="list-group-item">Prezzo: {{ $sellable['price'] }} €</li>
+                            @if ($sellable->category)
+                                <li class="list-group-item">{{ $sellable->category->name }}</li>
+                            @endif
+                            <li class="list-group-item text-center">
+                                <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
+                                    class="btn btn-outline-primary btn-sm w-100">Dettagli</a>
+                            </li>
+                        </ul>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a class="btn btn-outline-success"
+                                href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#destroyModal-{{ $sellable->id }}">
+                                Elimina
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @empty
-            <p class="text-muted">Nessun prodotto associato a questa categoria.</p>
-        @endforelse
+            @empty
+                <div class="alert alert-warning text-center my-4">
+                    Nessun prodotto associato a questa categoria.
+                </div>
+            @endforelse
+        </div>
     </div>
-</div>
 @endsection

@@ -28,17 +28,16 @@
                         <div class="card-header d-flex align-content-center">
                             <h5 class="mb-0">{{ $category['name'] }}</h5>
                         </div>
-                        @if ($category->description)
-                            <div class="card-body d-flex flex-column">
+                        <div class="card-body d-flex flex-column">
+                            @if ($category->description)
                                 <p>{{ $category['description'] }}</p>
-                                <a href="{{ route('admin.categories.show', $category->slug) }}" class="mt-auto">Vedi Prodotti
-                                    associati</a>
-                            </div>
-                        @else
-                            <div class="card-body text-muted fst-italic">
-                                Nessun descrizione disponibile
-                            </div>
-                        @endif
+                            @else
+                                <p class="text-muted fst-italic">Nessuna descrizione disponibile</p>
+                            @endif
+
+                            <a href="{{ route('admin.categories.show', $category->slug) }}" class="mt-auto">Vedi Prodotti
+                                associati</a>
+                        </div>
                         <div class="card-footer d-flex justify-content-between">
                             <a class="btn btn-outline-success"
                                 href="{{ route('admin.categories.edit', $category) }}">Modifica</a>

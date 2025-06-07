@@ -17,18 +17,18 @@
         <h1 class="my-4">@yield('title')</h1>
 
         {{-- Ricerca --}}
-        <form method="GET" action="{{ route('admin.sellables.index') }}" class="mb-4">
+        <form method="GET" action="{{ route('admin.sellables.index') }}" class="border rounded p-2 mb-5">
             <div class="row g-2 align-items-end">
 
                 {{-- Campo ricerca --}}
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <label for="search" class="form-label">Cerca per nome</label>
                     <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control"
                         placeholder="Es: Cappuccino...">
                 </div>
 
                 {{-- Filtro categoria --}}
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <label for="category_id" class="form-label">Categoria</label>
                     <select name="category_id" id="category_id" class="form-select">
                         <option value="">Tutte le categorie</option>
@@ -42,16 +42,18 @@
                 </div>
 
                 {{-- Bottoni Cerca e Reset --}}
-                <div class="col-md-2 d-flex gap-2">
-                    <button class="btn btn-primary" type="submit">Cerca</button>
-                    <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary">Reset</a>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100" type="submit">Cerca</button>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary w-100">Reset</a>
                 </div>
             </div>
         </form>
 
         {{-- Aggiungi Nuovo --}}
-        <div>
-            <a class="btn btn-primary mb-3" href="{{ route('admin.sellables.create') }}">+ Aggiungi un nuovo articolo</a>
+        <div class="d-flex justify-content-end my-3">
+            <a class="btn btn-primary" href="{{ route('admin.sellables.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
         {{-- Grid --}}

@@ -16,12 +16,8 @@
         <div class="card h-100 d-flex flex-column mt-1">
             @if ($sellable->image)
                 <div class="card-header text-center">
-                    <img 
-                        class="img-fluid rounded"
-                        style="max-width: 100%; width: 400px; object-fit: cover;"
-                        src="{{ asset('storage/' . $sellable->image) }}" 
-                        alt="Immagine della pagina {{ $sellable->name }}"
-                    >
+                    <img class="img-fluid rounded" style="max-width: 100%; width: 400px; object-fit: cover;"
+                        src="{{ asset('storage/' . $sellable->image) }}" alt="Immagine della pagina {{ $sellable->name }}">
                 </div>
             @endif
             <div class="card-body">
@@ -30,9 +26,11 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Prezzo: {{ $sellable['price'] }} €</li>
-                <li class="list-group-item">{{ $sellable->category->name }}</li>
+                @if ($sellable->category)
+                    <li class="list-group-item">{{ $sellable->category->name }}</li>
+                @endif
             </ul>
-            <div class="card-body d-flex justify-content-between">
+            <div class="card-footer d-flex justify-content-between">
                 <a class="btn btn-outline-success" href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                     data-bs-target="#destroyModal-{{ $sellable->id }}">

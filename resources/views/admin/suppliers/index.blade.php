@@ -20,7 +20,7 @@
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
                     <div class="card h-100 mb-3">
                         <div class="card-header d-flex align-content-center">
-                            <h5 class="mb-0">{{ $supplier['name'] }}</h5>
+                            <h5 class="card-title mb-0">{{ $supplier['name'] }}</h5>
                         </div>
                         <div class="card-body">
                             <a href="{{ route('admin.suppliers.show', $supplier->slug) }}" class="mt-auto">Vedi Prodotti

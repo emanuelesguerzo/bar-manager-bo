@@ -47,8 +47,9 @@
             <div class="mb-3">
                 <label class="form-label" for="category_id">Categoria Prodotto</label>
                 <select class="form-control" name="category_id" id="category_id">
+                    <option value="">— Seleziona categoria —</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ $sellable->category_id == $category->id ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}" {{ old('category_id', $sellable->category_id) == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}</option>
                     @endforeach
                 </select>

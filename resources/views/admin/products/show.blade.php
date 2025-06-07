@@ -36,7 +36,7 @@
                     <li class="list-group-item"><strong>Stock:</strong> {{ $product->stock_g }} g</li>
                 @endif
             </ul>
-            <div class="card-body d-flex justify-content-between">
+            <div class="card-footer d-flex justify-content-between">
                 <a class="btn btn-outline-success" href="{{ route('admin.products.edit', $product) }}">Modifica</a>
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                     data-bs-target="#destroyModal-{{ $product->id }}">

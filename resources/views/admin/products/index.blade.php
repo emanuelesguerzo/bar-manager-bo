@@ -52,7 +52,7 @@
                         @endif
 
                         <div class="card-body py-2">
-                            <h5 class="card-title">{{ $product->name }}</h5>
+                            <h5 class="card-title mb-0">{{ $product->name }}</h5>
                             @if ($product->brand)
                                 <small class="text-muted">{{ $product->brand }}</small>
                             @endif
