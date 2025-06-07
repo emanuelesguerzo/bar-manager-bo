@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Sellable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -40,8 +41,9 @@ class SellableController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $products = Product::orderBy('name')->get();
 
-        return view("admin.sellables.create", compact("categories"));
+        return view("admin.sellables.create", compact("categories", "products"));
     }
 
     /**
@@ -55,6 +57,9 @@ class SellableController extends Controller
             "price" => "required|numeric|min:0|max:9999.99",
             "image" => "nullable|image",
             "category_id" => "nullable|exists:categories,id",
+            "product_id.*" => "nullable|exists:products,id",
+            "quantity.*" => "nullable|integer|min:1",
+            "unit.*" => "nullable|in:ml,g,pz",
         ]);
 
         $data = $request->all();
@@ -73,6 +78,21 @@ class SellableController extends Controller
         }
 
         $newSellable->save();
+
+        $ingredients = [];
+
+        if (isset($data['product_id'])) {
+            foreach ($data['product_id'] as $index => $productId) {
+                if ($productId) {
+                    $ingredients[$productId] = [
+                        'quantity' => $data['quantity'][$index] ?? 1,
+                        'unit' => $data['unit'][$index] ?? null,
+                    ];
+                }
+            }
+
+            $newSellable->products()->sync($ingredients);
+        }
 
         return redirect()->route("admin.sellables.index")->with("success", "Il prodotto $newSellable->name è stato creato con successo!");
     }
@@ -103,8 +123,9 @@ class SellableController extends Controller
     public function edit(Sellable $sellable)
     {
         $categories = Category::all();
+        $products = Product::orderBy('name')->get();
 
-        return view("admin.sellables.edit", compact("sellable", "categories"));
+        return view("admin.sellables.edit", compact("sellable", "categories", "products"));
     }
 
     /**
@@ -118,6 +139,9 @@ class SellableController extends Controller
             "price" => "required|numeric|min:0|max:9999.99",
             "image" => "nullable|image",
             "category_id" => "nullable|exists:categories,id",
+            "product_id.*" => "nullable|exists:products,id",
+            "quantity.*" => "nullable|integer|min:1",
+            "unit.*" => "nullable|in:ml,g,pz",
         ]);
 
         $data = $request->all();
@@ -153,6 +177,21 @@ class SellableController extends Controller
 
         $sellable->save();
 
+        $ingredients = [];
+
+        if (isset($data['product_id'])) {
+            foreach ($data['product_id'] as $index => $productId) {
+                if ($productId) {
+                    $ingredients[$productId] = [
+                        'quantity' => $data['quantity'][$index] ?? 1,
+                        'unit' => $data['unit'][$index] ?? null,
+                    ];
+                }
+            }
+        }
+
+        $sellable->products()->sync($ingredients);
+
         return redirect()->route("admin.sellables.show", $sellable)->with("success", "Il prodotto $sellable->name è stato aggiornato con successo!");
     }
 
@@ -161,6 +200,7 @@ class SellableController extends Controller
      */
     public function destroy(Sellable $sellable)
     {
+        $sellable->products()->detach();
 
         if ($sellable->image && Storage::disk('public')->exists($sellable->image)) {
             Storage::disk('public')->delete($sellable->image);

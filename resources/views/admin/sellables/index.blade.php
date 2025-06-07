@@ -60,7 +60,11 @@
         <div class="row">
             @foreach ($sellables as $sellable)
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+
+                    {{-- Card --}}
                     <div class="card h-100 d-flex flex-column justify-content-between">
+                        
+                        {{-- Immagine --}}
                         @if ($sellable->image)
                             <div class="card-header">
                                 <img class="img-fluid w-100 rounded"
@@ -69,20 +73,35 @@
                                     alt="Immagine della pagina {{ $sellable->name }}">
                             </div>
                         @endif
+
+                        {{-- Nome e Descrizione --}}
                         <div class="card-body py-2">
                             <h5 class="card-title">{{ $sellable['name'] }}</h5>
                             <p class="card-text">{{ $sellable['description'] }}</p>
                         </div>
+
+                        {{-- Lista --}}
                         <ul class="list-group list-group-flush mt-auto">
+
+                            {{-- Prezzo --}}
                             <li class="list-group-item">Prezzo: {{ $sellable['price'] }} €</li>
+
+                            {{-- Categoria --}}
                             @if ($sellable->category)
                                 <li class="list-group-item">{{ $sellable->category->name }}</li>
                             @endif
+                            {{-- Ingredienti --}}
+                            <li class="list-group-item">Ingredienti: {{ $sellable->products->count() }}</li>
+                            
+                            {{-- Dettagli --}}
                             <li class="list-group-item text-center">
                                 <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
                                     class="btn btn-outline-primary btn-sm w-100">Dettagli</a>
                             </li>
+
                         </ul>
+                        
+                        {{-- Bottoni Modifica e Elimina --}}
                         <div class="card-footer d-flex justify-content-between">
                             <a class="btn btn-outline-success"
                                 href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
@@ -91,17 +110,27 @@
                                 Elimina
                             </button>
                         </div>
+
                     </div>
                 </div>
+
+                {{-- Modale Elimina --}}
                 <x-modal.delete-sellable :sellable="$sellable" />
+
             @endforeach
+
+            {{-- Nessuno Prodotto --}}
             @if ($sellables->isEmpty())
                 <div class="alert alert-warning text-center my-4">
                     Nessun prodotto corrisponde alla ricerca o alla categoria selezionata.
                 </div>
             @endif
+            
         </div>
+
+        {{-- Navigazione --}}
         {{ $sellables->withQueryString()->links() }}
+
     </div>
 
 @endsection
