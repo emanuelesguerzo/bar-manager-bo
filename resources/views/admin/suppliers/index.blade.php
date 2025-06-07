@@ -3,16 +3,20 @@
 
 @section('content')
     <div class="container">
+
+        {{-- Alert Successo --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
+        {{-- Titolo Principale --}}
         <h1 class="my-4">@yield('title')</h1>
 
-        <div>
-            <a class="btn btn-primary mb-3" href="{{ route('admin.suppliers.create') }}">+ Aggiungi un nuovo fornitore</a>
+        <div class="d-flex justify-content-end my-3">
+            <a class="btn btn-primary mb-3" href="{{ route('admin.suppliers.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
         <div class="row">
@@ -22,21 +26,20 @@
                         <div class="card-header d-flex align-content-center">
                             <h5 class="card-title mb-0">{{ $supplier['name'] }}</h5>
                         </div>
-                        <div class="card-body">
-                            <a href="{{ route('admin.suppliers.show', $supplier->slug) }}" class="mt-auto">Vedi Prodotti
-                                    associati</a>
-                        </div>
-
-                        
                         @if ($supplier->email || $supplier->phone)
-                            <div class="card-body d-flex flex-column">
+                            <div class="card-body d-flex justify-content-between align-items-center">
                                 @if ($supplier->email)
                                     <a
-                                        href="mailto:{{ $supplier['email'] }}?subject=Nuovo ordine&body=Buongiorno,%0A%0Aecco il nostro nuovo ordine:">Scrivi
+                                        class="btn btn-outline-secondary"
+                                        href="mailto:{{ $supplier['email'] }}?subject=Nuovo ordine&body=Buongiorno,%0A%0Aecco il nostro nuovo ordine:"><i class="fa-solid fa-envelope me-2"></i>Scrivi
                                         Mail</a>
                                 @endif
                                 @if ($supplier->phone)
-                                    <a href="tel:{{ $supplier['phone'] }}">Chiama</a>
+                                    <a 
+                                        class="btn btn-outline-secondary" 
+                                        href="tel:{{ $supplier['phone'] }}">
+                                        <i class="fa-solid fa-phone me-2"></i>Chiama
+                                    </a>
                                 @endif
                             </div>
                         @else
@@ -44,6 +47,12 @@
                                 Nessun contatto disponibile
                             </div>
                         @endif
+                        <div class="card-body d-flex justify-content-center p-0 mb-3">
+                            <a href="{{ route('admin.suppliers.show', $supplier->slug) }}" class="mt-auto btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass me-2"></i>Prodotti
+                                    associati</a>
+                        </div>
+
+                        
                         <div class="card-footer d-flex justify-content-between">
                             <a class="btn btn-outline-success" href="{{ route('admin.suppliers.edit', $supplier) }}">Modifica</a>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"

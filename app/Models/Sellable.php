@@ -10,9 +10,16 @@ class Sellable extends Model
     {
         return 'slug';
     }
-    
+
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)
+            ->withPivot('quantity', 'unit')
+            ->withTimestamps();
     }
 }

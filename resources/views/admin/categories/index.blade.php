@@ -3,24 +3,32 @@
 
 @section('content')
     <div class="container">
+
+        {{-- Alert Errore --}}
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                 {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
+        {{-- Alert Successo --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
+        {{-- Titolo Principale --}}
         <h1 class="my-4">@yield('title')</h1>
 
-        <div>
-            <a class="btn btn-primary mb-3" href="{{ route('admin.categories.create') }}">+ Aggiungi una nuova categoria</a>
+        {{-- Aggiungi Nuovo --}}
+        <div class="d-flex justify-content-end my-3">
+            <a class="btn btn-primary mb-3" href="{{ route('admin.categories.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
+        {{-- Grid --}}
         <div class="row">
             @foreach ($categories as $category)
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
@@ -35,7 +43,7 @@
                                 <p class="text-muted fst-italic">Nessuna descrizione disponibile</p>
                             @endif
 
-                            <a href="{{ route('admin.categories.show', $category->slug) }}" class="mt-auto">Vedi Prodotti
+                            <a href="{{ route('admin.categories.show', $category->slug) }}" class="mt-auto btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass me-2"></i>Prodotti
                                 associati</a>
                         </div>
                         <div class="card-footer d-flex justify-content-between">

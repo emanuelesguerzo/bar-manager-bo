@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="container mt-3">
+
         {{-- Alert Successo --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
@@ -16,10 +17,11 @@
         <h1 class="my-4">@yield('title')</h1>
 
         {{-- Search --}}
-        <form method="GET" action="{{ route('admin.products.index') }}" class="mb-4">
+        <form method="GET" action="{{ route('admin.products.index') }}" class="border rounded p-2 mb-5">
             <div class="row g-2 align-items-end">
+
                 {{-- Campo ricerca --}}
-                <div class="col-md-5">
+                <div class="col-md-8">
                     <label for="search" class="form-label">Cerca per nome o marca</label>
                     <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control"
                         placeholder="Es: Prosecco...">
@@ -27,15 +29,17 @@
 
                 {{-- Bottoni Cerca e Reset --}}
                 <div class="col-md-2 d-flex gap-2">
-                    <button class="btn btn-primary" type="submit">Cerca</button>
-                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">Reset</a>
+                    <button class="btn btn-primary w-100" type="submit">Cerca</button>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary w-100">Reset</a>
                 </div>
             </div>
         </form>
 
         {{-- Aggiungi Nuovo --}}
-        <div>
-            <a class="btn btn-primary mb-3" href="{{ route('admin.products.create') }}">+ Aggiungi un nuovo prodotto</a>
+        <div class="d-flex justify-content-end my-3">
+            <a class="btn btn-primary mb-3" href="{{ route('admin.products.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
         {{-- Grid --}}

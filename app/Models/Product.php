@@ -11,8 +11,15 @@ class Product extends Model
         return 'slug';
     }
 
-    public function supplier() {
+    public function supplier()
+    {
         return $this->belongsTo(Supplier::class);
     }
-    
+
+    public function sellables()
+    {
+        return $this->belongsToMany(Sellable::class)
+            ->withPivot('quantity', 'unit')
+            ->withTimestamps();
+    }
 }
