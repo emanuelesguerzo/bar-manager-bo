@@ -21,8 +21,13 @@
             {{-- Nome Prodotto --}}
             <div class="mb-3">
                 <label class="form-label label-required" for="name">Nome del prodotto</label>
-                <input class="form-control" type="text" name="name" id="name" maxlength="255"
+                <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name" maxlength="255"
                     value="{{ old('name') }}" placeholder="Es: Frappè" required>
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
             {{-- Prezzo Prodotto --}}
@@ -63,7 +68,7 @@
             {{-- Descrizione Prodotto --}}
             <div class="mb-4">
                 <label class="form-label" for="description">Descrizione del prodotto</label>
-                <textarea class="form-control" type="text" name="description" id="description" rows="2"
+                <textarea class="form-control" name="description" id="description" rows="2"
                     placeholder="Es: Bevanda a base di gelato">{{ old('description') }}</textarea>
             </div>
 

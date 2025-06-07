@@ -45,7 +45,7 @@
             <div class="mb-4">
                 <label class="form-label" for="phone">Telefono del fornitore</label>
                 <input class="form-control @error('phone') is-invalid @enderror" type="tel" name="phone"
-                    id="phone" pattern="^\+39\d{9,10}$" placeholder="+39..." value="{{ old('phone') }}">
+                    id="phone" pattern="^\+39\d{9,10}$" placeholder="+390000000000" value="{{ old('phone') }}">
                 @error('phone')
                     <div class="invalid-feedback">
                         {{ $message }}

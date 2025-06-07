@@ -47,13 +47,13 @@ class SupplierController extends Controller
 
         $newSupplier = new Supplier();
         $newSupplier->name = $data["name"];
-        $newSupplier->slug = Str::slug($data['name']);
+        $newSupplier->slug = Str::slug($data["name"]);
         $newSupplier->email = $data["email"];
         $newSupplier->phone = $data["phone"];
 
         $newSupplier->save();
 
-        return redirect()->route('admin.suppliers.index')->with('success', 'Fornitore creato con successo!');
+        return redirect()->route("admin.suppliers.index")->with("success", "Il fornitore $newSupplier->name è stato creato con successo!");
     }
 
     /**
@@ -61,9 +61,9 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        $products = $supplier->products()->orderBy('name')->get();
+        $products = $supplier->products()->orderBy("name")->get();
 
-        return view('admin.suppliers.show', compact('supplier', 'products'));
+        return view("admin.suppliers.show", compact("supplier", "products"));
     }
 
     /**
@@ -80,7 +80,7 @@ class SupplierController extends Controller
     public function update(Request $request, Supplier $supplier)
     {
         $request->validate([
-            "name" => "required|string|max:255",
+            "name" => "required|string|max:255|unique:suppliers,name," . $supplier->id,
             "email" => "nullable|email:dns|max:255",
             "phone" => [
                 "nullable",
@@ -100,8 +100,7 @@ class SupplierController extends Controller
 
         $supplier->save();
 
-        return redirect()->route("admin.suppliers.index", $supplier)->with('success', 'Fornitore aggiornato con successo!');
-
+        return redirect()->route("admin.suppliers.index")->with("success", "Il fornitore $supplier->name è stato aggiornato con successo!");
     }
 
     /**
@@ -109,8 +108,12 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
+        if ($supplier->products()->exists()) {
+            return redirect()->back()->with("error", "Non puoi eliminare un fornitore con prodotti associati.");
+        }
+
         $supplier->delete();
 
-        return redirect()->route("admin.suppliers.index")->with("success", "Fornitore cancellato con successo!");
+        return redirect()->route("admin.suppliers.index")->with("success", "Il fornitore $supplier->name è stato cancellato con successo!");
     }
 }

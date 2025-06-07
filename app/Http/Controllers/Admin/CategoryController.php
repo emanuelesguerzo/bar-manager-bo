@@ -35,8 +35,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
-            'description' => 'nullable|string',
+            "name" => "required|string|max:255|unique:categories,name",
+            "description" => "nullable|string",
         ]);
 
         $data = $request->all();
@@ -48,7 +48,7 @@ class CategoryController extends Controller
 
         $newCategory->save();
 
-        return redirect()->route('admin.categories.index')->with('success', 'Categoria creata con successo!');
+        return redirect()->route("admin.categories.index")->with("success", "La categoria $newCategory->name è stata creata con successo!");
     }
 
     /**
@@ -56,9 +56,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $sellables = $category->sellables()->orderBy('name')->get();
+        $sellables = $category->sellables()->orderBy("name")->get();
 
-        return view('admin.categories.show', compact('category', 'sellables'));
+        return view("admin.categories.show", compact("category", "sellables"));
     }
 
     /**
@@ -75,8 +75,8 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            "name" => "required|string|max:255|unique:categories,name," . $category->id,
+            "description" => "nullable|string",
         ]);
 
         $data = $request->all();
@@ -90,7 +90,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route("admin.categories.index", $category)->with('success', 'Categoria aggiornata con successo!');
+        return redirect()->route("admin.categories.index")->with("success", "La categoria $category->name è stata aggiornata con successo!");
     }
 
     /**
@@ -99,11 +99,11 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->sellables()->count() > 0) {
-            return redirect()->back()->with('error', 'Non puoi eliminare una categoria che ha prodotti associati.');
+            return redirect()->back()->with("error", "Non puoi eliminare una categoria che ha prodotti associati.");
         }
         
         $category->delete();
 
-        return redirect()->route("admin.categories.index")->with("success", "Categoria cancellata con successo!");
+        return redirect()->route("admin.categories.index")->with("success", "La categoria $category->name è stata cancellata con successo!");
     }
 }

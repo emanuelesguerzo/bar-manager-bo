@@ -19,9 +19,9 @@ class ProductController extends Controller
         $suppliers = Supplier::all();
         $query = Product::query();
 
-        if ($search = $request->input('search')) {
+        if ($search = $request->input("search")) {
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")->orWhere('brand', 'like', "%$search%");
+                $q->where("name", "like", "%$search%")->orWhere("brand", "like", "%$search%");
             });
         }
 
@@ -37,7 +37,7 @@ class ProductController extends Controller
     {
         $suppliers = Supplier::all();
 
-        return view('admin.products.create', compact('suppliers'));
+        return view("admin.products.create", compact("suppliers"));
     }
 
     /**
@@ -46,49 +46,49 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:products,name',
-            'brand' => 'nullable|string|max:255',
-            'price' => 'required|numeric|min:0|max:9999.99',
-            'units_in_stock' => 'required|integer|min:0',
-            'unit_size_ml' => 'nullable|integer|min:0',
-            'unit_size_g' => 'nullable|integer|min:0',
-            'image' => 'nullable|image',
-            'supplier_id' => 'nullable|exists:suppliers,id',
-            'stock_quantity' => 'nullable|integer|min:0',
-            'stock_unit' => 'nullable|in:ml,g',
+            "name" => "required|string|max:255|unique:products,name",
+            "brand" => "nullable|string|max:255",
+            "price" => "required|numeric|min:0|max:9999.99",
+            "units_in_stock" => "required|integer|min:0",
+            "unit_size_ml" => "nullable|integer|min:0",
+            "unit_size_g" => "nullable|integer|min:0",
+            "image" => "nullable|image",
+            "supplier_id" => "nullable|exists:suppliers,id",
+            "stock_quantity" => "nullable|integer|min:0",
+            "stock_unit" => "nullable|in:ml,g",
         ]);
 
         $data = $request->all();
 
         $newProduct = new Product();
-        $newProduct->name = $data['name'];
-        $newProduct->slug = Str::slug($data['name']);
-        $newProduct->brand = $data['brand'];
-        $newProduct->price = $data['price'];
-        $newProduct->units_in_stock = $data['units_in_stock'];
+        $newProduct->name = $data["name"];
+        $newProduct->slug = Str::slug($data["name"]);
+        $newProduct->brand = $data["brand"];
+        $newProduct->price = $data["price"];
+        $newProduct->units_in_stock = $data["units_in_stock"];
 
-        if ($data['stock_unit'] === 'ml') {
-            $newProduct->unit_size_ml = $data['stock_quantity'];
-            $newProduct->stock_ml = $data['stock_quantity'] * $data['units_in_stock'];
+        if ($data["stock_unit"] === "ml") {
+            $newProduct->unit_size_ml = $data["stock_quantity"];
+            $newProduct->stock_ml = $data["stock_quantity"] * $data["units_in_stock"];
             $newProduct->unit_size_g = null;
             $newProduct->stock_g = null;
-        } elseif ($data['stock_unit'] === 'g') {
-            $newProduct->unit_size_g = $data['stock_quantity'];
-            $newProduct->stock_g = $data['stock_quantity'] * $data['units_in_stock'];
+        } elseif ($data["stock_unit"] === "g") {
+            $newProduct->unit_size_g = $data["stock_quantity"];
+            $newProduct->stock_g = $data["stock_quantity"] * $data["units_in_stock"];
             $newProduct->unit_size_ml = null;
             $newProduct->stock_ml = null;
         }
 
-        $newProduct->supplier_id = $data['supplier_id'] ?? null;
+        $newProduct->supplier_id = $data["supplier_id"] ?? null;
 
-        if ($request->hasFile('image')) {
-            $img_url = Storage::disk('public')->put('products', $data['image']);
+        if ($request->hasFile("image")) {
+            $img_url = Storage::disk("public")->put("products", $data["image"]);
             $newProduct->image = $img_url;
         }
 
         $newProduct->save();
 
-        return redirect()->route('admin.products.index')->with('success', 'Prodotto creato con successo!');
+        return redirect()->route("admin.products.index")->with("success", "Il prodotto $newProduct->name è stato creato con successo!");
     }
 
     /**
@@ -96,16 +96,16 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $previous = Product::where('id', '<', $product->id)->orderBy('id', 'desc')->first();
-        $next = Product::where('id', '>', $product->id)->orderBy('id')->first();
+        $previous = Product::where("id", "<", $product->id)->orderBy("id", "desc")->first();
+        $next = Product::where("id", ">", $product->id)->orderBy("id")->first();
 
         // Se siamo al primo o all'ultimo cicliamo
         if (!$previous) {
-            $previous = Product::orderBy('id', 'desc')->first();
+            $previous = Product::orderBy("id", "desc")->first();
         }
 
         if (!$next) {
-            $next = Product::orderBy('id')->first();
+            $next = Product::orderBy("id")->first();
         }
 
         return view("admin.products.show", compact("product", "previous", "next"));
@@ -127,59 +127,62 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:products,name,' . $product->id,
-            'brand' => 'nullable|string|max:255',
-            'price' => 'required|numeric|min:0|max:9999.99',
-            'units_in_stock' => 'required|integer|min:0',
-            'stock_quantity' => 'nullable|integer|min:0',
-            'stock_unit' => 'nullable|in:ml,g',
-            'image' => 'nullable|image',
-            'supplier_id' => 'nullable|exists:suppliers,id',
+            "name" => "required|string|max:255|unique:products,name," . $product->id,
+            "brand" => "nullable|string|max:255",
+            "price" => "required|numeric|min:0|max:9999.99",
+            "units_in_stock" => "required|integer|min:0",
+            "stock_quantity" => "nullable|integer|min:0",
+            "stock_unit" => "nullable|in:ml,g",
+            "image" => "nullable|image",
+            "supplier_id" => "nullable|exists:suppliers,id",
         ]);
 
         $data = $request->all();
 
-        $product->name = $data['name'];
-        $product->slug = Str::slug($data['name']);
-        $product->brand = $data['brand'];
-        $product->price = $data['price'];
-        $product->units_in_stock = $data['units_in_stock'];
+        if ($product->name !== $data["name"]) {
+            $product->slug = Str::slug($data["name"]);
+        }
 
-        if ($data['stock_unit'] === 'ml') {
-            $product->unit_size_ml = $data['stock_quantity'];
-            $product->stock_ml = $data['stock_quantity'] * $data['units_in_stock'];
+        $product->name = $data["name"];
+        $product->brand = $data["brand"];
+        $product->price = $data["price"];
+        $product->units_in_stock = $data["units_in_stock"];
+
+        if ($data["stock_unit"] === "ml") {
+            $product->unit_size_ml = $data["stock_quantity"];
+            $product->stock_ml = $data["stock_quantity"] * $data["units_in_stock"];
             $product->unit_size_g = null;
             $product->stock_g = null;
-        } elseif ($data['stock_unit'] === 'g') {
-            $product->unit_size_g = $data['stock_quantity'];
-            $product->stock_g = $data['stock_quantity'] * $data['units_in_stock'];
+        } elseif ($data["stock_unit"] === "g") {
+            $product->unit_size_g = $data["stock_quantity"];
+            $product->stock_g = $data["stock_quantity"] * $data["units_in_stock"];
             $product->unit_size_ml = null;
             $product->stock_ml = null;
         }
 
-        $product->supplier_id = $data['supplier_id'] ?? null;
+        $product->supplier_id = $data["supplier_id"] ?? null;
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile("image")) {
             // Cancella l'immagine precedente se esiste
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
+            if ($product->image && Storage::disk("public")->exists($product->image)) {
+                Storage::disk("public")->delete($product->image);
             }
 
             // Salva la nuova immagine
-            $img_url = Storage::disk('public')->put('products', $request->file('image'));
+            $img_url = Storage::disk("public")->put("products", $request->file("image"));
             $product->image = $img_url;
         }
 
-        if ($request->has('delete_image')) {
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
+        if ($request->has("delete_image")) {
+            if ($product->image && Storage::disk("public")->exists($product->image)) {
+                Storage::disk("public")->delete($product->image);
             }
             $product->image = null;
         }
 
         $product->save();
 
-        return redirect()->route('admin.products.index')->with('success', 'Prodotto aggiornato con successo!');
+        return redirect()->route("admin.products.index")->with("success", "Il prodotto $product->name è stato aggiornato con successo!");
     }
 
     /**
@@ -187,12 +190,12 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
+        if ($product->image && Storage::disk("public")->exists($product->image)) {
+            Storage::disk("public")->delete($product->image);
         }
 
         $product->delete();
 
-        return redirect()->route("admin.products.index")->with("success", "Prodotto cancellato con successo!");
+        return redirect()->route("admin.products.index")->with("success", "Il prodotto $product->name è stato cancellato con successo!");
     }
 }
