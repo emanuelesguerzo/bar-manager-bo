@@ -77,15 +77,15 @@
 
                         {{-- Nome e Descrizione --}}
                         <div class="card-body py-2">
-                            <h5 class="card-title">{{ $sellable['name'] }}</h5>
-                            <p class="card-text">{{ $sellable['description'] }}</p>
+                            <h5 class="card-title">{{ $sellable->name }}</h5>
+                            <p class="card-text">{{ $sellable->description }}</p>
                         </div>
 
                         {{-- Lista --}}
                         <ul class="list-group list-group-flush mt-auto">
 
                             {{-- Prezzo --}}
-                            <li class="list-group-item">Prezzo: {{ $sellable['price'] }} €</li>
+                            <li class="list-group-item">Prezzo: {{ $sellable->price }} €</li>
 
                             {{-- Categoria --}}
                             @if ($sellable->category)

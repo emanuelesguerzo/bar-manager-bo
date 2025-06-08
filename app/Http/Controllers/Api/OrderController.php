@@ -33,10 +33,38 @@ class OrderController extends Controller
 
         $newOrder->sellables()->attach($orderItems);
 
+        foreach ($newOrder->sellables as $sellable) {
+
+            $orderedQuantity = $sellable->pivot->quantity;
+
+            foreach ($sellable->products as $product) {
+
+                $perUnitQuantity = $product->pivot->quantity;
+                $unit = $product->pivot->unit;
+
+                $totalToSubtract = $perUnitQuantity * $orderedQuantity;
+
+                // Sottraggo il totale dagli stock ml e g del magazzino
+                if ($unit === 'ml') {
+                    $product->stock_ml -= $totalToSubtract;
+                } elseif ($unit === 'g') {
+                    $product->stock_g -= $totalToSubtract;
+                }
+
+                // Aggiorno unita' stoccate in magazzino
+                if ($unit === 'ml' && $product->unit_size_ml) {
+                    $product->units_in_stock = floor($product->stock_ml / $product->unit_size_ml);
+                } elseif ($unit === 'g' && $product->unit_size_g) {
+                    $product->units_in_stock = floor($product->stock_g / $product->unit_size_g);
+                }
+
+                $product->save();
+            }
+        }
+
         return response()->json([
             "success" => true,
             "message" => "Ordine creato con successo!",
-            "order_id" => $newOrder->id,
         ], 201);
     }
 }

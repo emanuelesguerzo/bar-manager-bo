@@ -13,7 +13,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::with('sellables')->orderByDesc('created_at')->get();
+
+        return view("admin.orders.index", compact("orders"));
     }
 
     /**
@@ -53,7 +55,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $request->validate([
+            "status" => "required|in:inviato,preparazione,servito,chiuso"
+        ]);
+
+        $data = $request->all();
+
+        $order->status = $data["status"];
+
+        $order->save();
+
+        return redirect()->route("admin.orders.index")->with("success", "Stato ordine Tavolo $order->table_number aggiornato.");
     }
 
     /**
