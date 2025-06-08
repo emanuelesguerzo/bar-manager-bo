@@ -8,14 +8,14 @@ class Product extends Model
 {
     protected $hidden = [
         "pivot",
-        "created_at", 
-        "updated_at", 
+        "created_at",
+        "updated_at",
         "price",
-        "units_in_stock", 
-        "stock_ml", 
-        "stock_g", 
-        "unit_size_ml", 
-        "unit_size_g", 
+        "units_in_stock",
+        "stock_ml",
+        "stock_g",
+        "unit_size_ml",
+        "unit_size_g",
         "supplier_id",
         "id"
     ];
@@ -35,5 +35,10 @@ class Product extends Model
         return $this->belongsToMany(Sellable::class)
             ->withPivot("quantity", "unit")
             ->withTimestamps();
+    }
+
+    public function scopeLowStock($query)
+    {
+        return $query->whereColumn('units_in_stock', '<=', 'stock_alert_threshold');
     }
 }
