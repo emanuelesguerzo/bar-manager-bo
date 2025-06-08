@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sellable extends Model
 {
+    protected $hidden = [
+        "pivot", 
+        "category_id",
+        "created_at", 
+        "updated_at"
+    ];
+
     public function getRouteKeyName()
     {
-        return 'slug';
+        return "slug";
     }
 
     public function category()
@@ -19,7 +26,7 @@ class Sellable extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)
-            ->withPivot('quantity', 'unit')
+            ->withPivot("quantity", "unit")
             ->withTimestamps();
     }
 
