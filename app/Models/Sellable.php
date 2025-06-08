@@ -22,4 +22,10 @@ class Sellable extends Model
             ->withPivot('quantity', 'unit')
             ->withTimestamps();
     }
+
+    public function orders() {
+        return $this->belongsToMany(Order::class)
+            ->withPivot("quantity")
+            ->withTimestamps();
+    }
 }

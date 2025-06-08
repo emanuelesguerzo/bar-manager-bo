@@ -7,17 +7,22 @@
 
         {{-- Alert Successo --}}
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
-
+        
         {{-- Titolo Principale --}}
         <h1 class="my-4">@yield('title')</h1>
+        
+        {{-- Aggiungi Nuovo --}}
+        <div class="d-flex justify-content-end my-3">
+            <a class="btn btn-primary" href="{{ route('admin.sellables.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
+        </div>
 
         {{-- Ricerca --}}
-        <form method="GET" action="{{ route('admin.sellables.index') }}" class="border rounded p-2 mb-5">
+        <form method="GET" action="{{ route('admin.sellables.index') }}" class="border rounded p-2 mb-4 " >
             <div class="row g-2 align-items-end">
 
                 {{-- Campo ricerca --}}
@@ -51,10 +56,6 @@
             </div>
         </form>
 
-        {{-- Aggiungi Nuovo --}}
-        <div class="d-flex justify-content-end my-3">
-            <a class="btn btn-primary" href="{{ route('admin.sellables.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
-        </div>
 
         {{-- Grid --}}
         <div class="row">
