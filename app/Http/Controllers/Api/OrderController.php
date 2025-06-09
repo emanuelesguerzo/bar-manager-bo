@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Sellable;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -17,6 +18,32 @@ class OrderController extends Controller
             "sellables.*.id" => "required|exists:sellables,id",
             "sellables.*.quantity" => "required|integer|min:1",
         ]);
+
+        foreach ($request->sellables as $item) {
+            $sellable = Sellable::with('products')->find($item['id']);
+            $orderedQuantity = $item['quantity'];
+
+            // Check se il prodotto e' disponibile
+            foreach ($sellable->products as $product) {
+                $perUnitQuantity = $product->pivot->quantity;
+                $unit = $product->pivot->unit;
+                $totalRequired = $perUnitQuantity * $orderedQuantity;
+
+                if ($unit === 'ml' && $product->stock_ml < $totalRequired) {
+                    return response()->json([
+                        "success" => false,
+                        "message" => "Prodotto '{$sellable->name}' non disponibile in questa quantità.",
+                    ], 400);
+                }
+
+                if ($unit === 'g' && $product->stock_g < $totalRequired) {
+                    return response()->json([
+                        "success" => false,
+                        "message" => "Prodotto '{$sellable->name}' non disponibile in questa quantità.",
+                    ], 400);
+                }
+            }
+        }
 
         $data = $request->all();
 
@@ -60,6 +87,7 @@ class OrderController extends Controller
 
                 $product->save();
             }
+
         }
 
         return response()->json([

@@ -2,7 +2,13 @@
 @import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 
+// Asterisco required nei form
 .label-required::after {
     content: " *";
     color: red;
+}
+
+// Bottoni carico/scarico magazzino
+.w-btn {
+    width: 120px; 
 }

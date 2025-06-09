@@ -35,6 +35,58 @@
                 @if ($product->stock_g)
                     <li class="list-group-item"><strong>Stock:</strong> {{ $product->stock_g }} g</li>
                 @endif
+
+                {{-- Carico e scarico merce magazzino --}}
+                <li class="list-group-item p-0">
+                    <div class="accordion" id="accordion-{{ $product->id }}">
+                        <div class="accordion-item border-0">
+                            <h2 class="accordion-header" id="heading-{{ $product->id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-{{ $product->id }}" aria-expanded="false"
+                                    aria-controls="collapse-{{ $product->id }}">
+                                    Gestione magazzino
+                                </button>
+                            </h2>
+                            <div id="collapse-{{ $product->id }}" class="accordion-collapse collapse"
+                                aria-labelledby="heading-{{ $product->id }}"
+                                data-bs-parent="#accordion-{{ $product->id }}">
+                                <div class="accordion-body">
+                                    {{-- Aggiungi stock --}}
+                                    <form method="POST" action="{{ route('admin.products.addStock', $product) }}"
+                                        class="mb-2">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="number" name="new_units" min="1"
+                                                class="form-control flex-grow-1" placeholder="Aggiungi unità">
+                                            <button class="btn btn-success w-btn">+ Aggiungi</button>
+                                        </div>
+                                    </form>
+
+                                    {{-- Scarica stock --}}
+                                    <form method="POST" action="{{ route('admin.products.removeStock', $product) }}">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="number" name="remove_units" min="1"
+                                                max="{{ $product->units_in_stock }}" class="form-control flex-grow-1"
+                                                placeholder="Scarica unità">
+                                            <button class="btn btn-danger w-btn">- Scarica</button>
+                                        </div>
+                                    </form>
+
+                                    {{-- Scarico Completo --}}
+                                    <form method="POST" action="{{ route('admin.products.clearStock', $product) }}">
+                                        @csrf
+                                        <button type="button" class="btn btn-outline-warning w-100 mt-2"
+                                            data-bs-toggle="modal" data-bs-target="#clearStockModal-{{ $product->id }}">
+                                            <i class="fa-solid fa-arrows-rotate me-2"></i> Scarico completo
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
             </ul>
             <div class="card-footer d-flex justify-content-between">
                 <a class="btn btn-outline-success" href="{{ route('admin.products.edit', $product) }}">Modifica</a>

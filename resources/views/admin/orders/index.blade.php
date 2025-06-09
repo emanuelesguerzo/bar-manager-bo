@@ -55,7 +55,7 @@
                                 {{-- Prodotto ordinato e prezzo --}}
                                 <li class="list-group-item">
                                     <strong>{{ $sellable->name }}</strong> x{{ $sellable->pivot->quantity }}
-                                    – {{ number_format($sellable->price * $sellable->pivot->quantity, 2) }} €
+                                    - {{ number_format($sellable->price * $sellable->pivot->quantity, 2) }} €
                                 </li>
                             @endforeach
 
@@ -64,27 +64,28 @@
                                 <p class="fw-bold mb-0">Totale: {{ number_format($order->total, 2) }} €</p>
                             </li>
 
-                            {{-- Form stato ordine --}}
-                            <li class="list-group-item mt-auto">
-                                <form method="POST" action="{{ route('admin.orders.update', $order) }}"
-                                    class="d-flex align-items-center gap-2">
-                                    @csrf
-                                    @method('PATCH')
-                                    <label class="mb-0 fw-semibold">Stato:</label>
-                                    <select name="status" class="form-select" onchange="this.form.submit()">
-                                        @foreach (['inviato', 'preparazione', 'servito', 'chiuso'] as $status)
-                                            <option value="{{ $status }}"
-                                                {{ $order->status === $status ? 'selected' : '' }}>
-                                                
-                                                {{-- Serve per avere la lettere iniziale in maiuscolo --}}
-                                                {{ ucfirst($status) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </form>
-                            </li>
-
                         </ul>
+
+                        {{-- Form stato ordine --}}
+                        <div class="card-footer">
+                            <form method="POST" action="{{ route('admin.orders.update', $order) }}"
+                                class="d-flex align-items-center gap-2">
+                                @csrf
+                                @method('PATCH')
+                                <label class="mb-0 fw-semibold">Stato:</label>
+                                <select name="status" class="form-select" onchange="this.form.submit()">
+                                    @foreach (['inviato', 'preparazione', 'servito', 'chiuso'] as $status)
+                                        <option value="{{ $status }}"
+                                            {{ $order->status === $status ? 'selected' : '' }}>
+
+                                            {{-- Serve per avere la lettere iniziale in maiuscolo --}}
+                                            {{ ucfirst($status) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             @endforeach

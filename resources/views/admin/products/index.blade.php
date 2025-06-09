@@ -5,6 +5,14 @@
 @section('content')
     <div class="container mt-3">
 
+        {{-- Alert Errore --}}
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         {{-- Alert Successo --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
@@ -17,7 +25,7 @@
         <h1 class="my-4">@yield('title')</h1>
 
         {{-- Search --}}
-        <form method="GET" action="{{ route('admin.products.index') }}" class="border rounded p-2 mb-5">
+        <form method="GET" action="{{ route('admin.products.index') }}" class="border rounded p-2 mb-4">
             <div class="row g-2 align-items-end">
 
                 {{-- Campo ricerca --}}
@@ -38,15 +46,16 @@
         </form>
 
         {{-- Aggiungi Nuovo --}}
-        <div class="d-flex justify-content-end my-3">
-            <a class="btn btn-primary mb-3" href="{{ route('admin.products.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
+        <div class="d-flex justify-content-end mb-2">
+            <a class="btn btn-primary mb-3" href="{{ route('admin.products.create') }}"><i
+                    class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
         {{-- Grid --}}
         <div class="row">
             @foreach ($products as $product)
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
-                    <div class="card h-100 d-flex flex-column justify-content-between">
+                    <div class="card d-flex flex-column justify-content-between">
                         @if ($product->image)
                             <div class="card-header">
                                 <img class="img-fluid w-100 rounded" style="height: 180px; object-fit: cover;"
@@ -86,23 +95,86 @@
                                 <strong>Fornitore:</strong>
                                 {{ $product->supplier?->name ?? '—' }}
                             </li>
+
+                            {{-- Dettagli Prodotto --}}
                             <li class="list-group-item text-center">
                                 <a href="{{ route('admin.products.show', $product->slug) }}"
                                     class="btn btn-outline-primary btn-sm w-100">Dettagli</a>
                             </li>
+
+                            {{-- Carico e scarico merce magazzino --}}
+                            <li class="list-group-item p-0">
+                                <div class="accordion" id="accordion-{{ $product->id }}">
+                                    <div class="accordion-item border-0">
+                                        <h2 class="accordion-header" id="heading-{{ $product->id }}">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapse-{{ $product->id }}"
+                                                aria-expanded="false" aria-controls="collapse-{{ $product->id }}">
+                                                Gestione magazzino
+                                            </button>
+                                        </h2>
+                                        <div id="collapse-{{ $product->id }}" class="accordion-collapse collapse"
+                                            aria-labelledby="heading-{{ $product->id }}"
+                                            data-bs-parent="#accordion-{{ $product->id }}">
+                                            <div class="accordion-body">
+                                                {{-- Aggiungi stock --}}
+                                                <form method="POST"
+                                                    action="{{ route('admin.products.addStock', $product) }}"
+                                                    class="mb-2">
+                                                    @csrf
+                                                    <div class="input-group">
+                                                        <input type="number" name="new_units" min="1"
+                                                            class="form-control flex-grow-1" placeholder="Aggiungi unità">
+                                                        <button class="btn btn-success w-btn">+ Aggiungi</button>
+                                                    </div>
+                                                </form>
+
+                                                {{-- Scarica stock --}}
+                                                <form method="POST"
+                                                    action="{{ route('admin.products.removeStock', $product) }}">
+                                                    @csrf
+                                                    <div class="input-group">
+                                                        <input type="number" name="remove_units" min="1"
+                                                            max="{{ $product->units_in_stock }}"
+                                                            class="form-control flex-grow-1" placeholder="Scarica unità">
+                                                        <button class="btn btn-danger w-btn">- Scarica</button>
+                                                    </div>
+                                                </form>
+
+                                                {{-- Scarico completo --}}
+                                                <form method="POST"
+                                                    action="{{ route('admin.products.clearStock', $product) }}">
+                                                    @csrf
+                                                    <button type="button" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal"
+                                                        data-bs-target="#clearStockModal-{{ $product->id }}">
+                                                        <i class="fa-solid fa-arrows-rotate me-2"></i> Scarico completo
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
                         </ul>
 
+                        {{-- Bottoni Modifica e Elimina --}}
                         <div class="card-footer d-flex justify-content-between">
-                            <a class="btn btn-outline-success"
-                                href="{{ route('admin.products.edit', $product) }}">Modifica</a>
+                            <a class="btn btn-outline-success" href="{{ route('admin.products.edit', $product) }}"><i
+                                    class="fa-solid fa-pencil"></i></a>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                 data-bs-target="#destroyModal-{{ $product->id }}">
-                                Elimina
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
+
                     </div>
                 </div>
+
+                {{-- Modali --}}
                 <x-modal.delete-product :product="$product" />
+                <x-modal.clear-stock :product="$product" />
+
             @endforeach
             @if ($products->isEmpty())
                 <div class="alert alert-warning text-center my-4">

@@ -38,6 +38,10 @@ Route::middleware(["auth", "verified"])
         Route::resource("products", ProductController::class);
         Route::resource("orders", OrderController::class);
 
+        // Aggiunta e rimozione prodotti in magazzino
+        Route::post("/products/{product}/add-stock", [ProductController::class, "addStock"])->name("products.addStock");
+        Route::post("/products/{product}/remove-stock", [ProductController::class, "removeStock"])->name("products.removeStock");
+        Route::post("/products/{product}/clear-stock", [ProductController::class, "clearStock"])->name("products.clearStock");
     });
 
 require __DIR__.'/auth.php';

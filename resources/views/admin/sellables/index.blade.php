@@ -67,8 +67,8 @@
                         
                         {{-- Immagine --}}
                         @if ($sellable->image)
-                            <div class="card-header">
-                                <img class="img-fluid w-100 rounded"
+                            <div class="card-header bg-dark p-0">
+                                <img class="img-fluid w-100 bg-dark rounded-top rounded-bottom-0"
                                     style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
                                     src="{{ asset('storage/' . $sellable->image) }}"
                                     alt="Immagine della pagina {{ $sellable->name }}">

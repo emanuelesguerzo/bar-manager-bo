@@ -18,7 +18,6 @@
             @csrf
             @method('PUT')
 
-
             {{-- Nome Prodotto --}}
             <div class="mb-3">
                 <label for="name" class="form-label label-required">Nome prodotto</label>
@@ -38,13 +37,6 @@
                 <label for="price" class="form-label label-required">Prezzo (€)</label>
                 <input type="number" step="0.01" name="price" id="price" class="form-control"
                     value="{{ old('price', $product->price) }}" required>
-            </div>
-
-            {{-- Unità disponibili --}}
-            <div class="mb-3">
-                <label for="units_in_stock" class="form-label label-required">Unità in magazzino</label>
-                <input type="number" name="units_in_stock" id="units_in_stock" class="form-control"
-                    value="{{ old('units_in_stock', $product->units_in_stock) }}" placeholder="Es: 6" required>
             </div>
 
             {{-- Quantità + unità di misura --}}
@@ -103,10 +95,10 @@
             {{-- Soglia alert magazzino --}}
             <div class="mb-4">
                 <label for="stock_alert_threshold" class="form-label label-required">Soglia alert magazzino</label>
-                <input type="number" name="stock_alert_threshold" id="stock_alert_threshold"
-                    class="form-control"
+                <input type="number" name="stock_alert_threshold" id="stock_alert_threshold" class="form-control"
                     value="{{ old('stock_alert_threshold', $product->stock_alert_threshold) }}" min="1" required>
-                <div class="form-text">Invia un alert nella dashboard quando le unità in magazzino scendono a questo valore.</div>
+                <div class="form-text">Invia un alert nella dashboard quando le unità in magazzino scendono a questo
+                    valore.</div>
             </div>
 
             {{-- Submit --}}

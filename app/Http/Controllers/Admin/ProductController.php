@@ -167,12 +167,13 @@ class ProductController extends Controller
         $product->supplier_id = $data["supplier_id"] ?? null;
 
         if ($request->hasFile("image")) {
-            // Cancella l'immagine precedente se esiste
+
+            // Cancello l'immagine precedente se esiste
             if ($product->image && Storage::disk("public")->exists($product->image)) {
                 Storage::disk("public")->delete($product->image);
             }
 
-            // Salva la nuova immagine
+            // Salvo la nuova immagine
             $img_url = Storage::disk("public")->put("products", $request->file("image"));
             $product->image = $img_url;
         }
@@ -202,4 +203,74 @@ class ProductController extends Controller
 
         return redirect()->route("admin.products.index")->with("success", "Il prodotto $product->name è stato cancellato con successo!");
     }
+
+    /**
+     * Aggiunta merce al magazzino
+     */
+    public function addStock(Request $request, Product $product)
+    {
+        $request->validate([
+            'new_units' => 'required|integer|min:1',
+        ]);
+
+        $newUnits = $request->input('new_units');
+
+        // Aggiungo le nuove unità al conteggio esistente
+        $product->units_in_stock += $newUnits;
+
+        // Aggiorno stock_ml o stock_g a seconda del tipo
+        if ($product->unit_size_ml) {
+            $product->stock_ml += $newUnits * $product->unit_size_ml;
+        } elseif ($product->unit_size_g) {
+            $product->stock_g += $newUnits * $product->unit_size_g;
+        }
+
+        $product->save();
+
+        return redirect()->route('admin.products.index')->with('success', "Hai aggiunto $newUnits unità a $product->name!");
+    }
+
+    /**
+     * Rimozione merce in magazzino
+     */
+    public function removeStock(Request $request, Product $product)
+    {
+        $request->validate([
+            'remove_units' => 'required|integer|min:1',
+        ]);
+
+        $removeUnits = $request->input('remove_units');
+
+        // Non rimuovere più di quanto disponibile
+        if ($removeUnits > $product->units_in_stock) {
+            return redirect()->back()->with('error', "Non puoi rimuovere più unità di quelle presenti in magazzino!");
+        }
+
+        $product->units_in_stock -= $removeUnits;
+
+        if ($product->unit_size_ml) {
+            $product->stock_ml -= $removeUnits * $product->unit_size_ml;
+        } elseif ($product->unit_size_g) {
+            $product->stock_g -= $removeUnits * $product->unit_size_g;
+        }
+
+        $product->save();
+
+        return redirect()->route('admin.products.index')->with('success', "Hai scaricato $removeUnits unità da $product->name!");
+    }
+
+    /**
+     * Scarico magazzino completo
+     */
+    public function clearStock(Product $product)
+    {
+        $product->stock_ml = null;
+        $product->stock_g = null;
+        $product->units_in_stock = 0;
+        $product->save();
+
+        return redirect()->route("admin.products.index")
+            ->with("success", "Scarico magazzino completo di $product->name.");
+    }
+
 }
