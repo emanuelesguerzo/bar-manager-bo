@@ -56,6 +56,7 @@ class ProductController extends Controller
             "supplier_id" => "nullable|exists:suppliers,id",
             "stock_quantity" => "nullable|integer|min:0",
             "stock_unit" => "nullable|in:ml,g",
+            "stock_alert_threshold" => "required|integer|min:1",
         ]);
 
         $data = $request->all();
@@ -66,6 +67,7 @@ class ProductController extends Controller
         $newProduct->brand = $data["brand"];
         $newProduct->price = $data["price"];
         $newProduct->units_in_stock = $data["units_in_stock"];
+        $newProduct->stock_alert_threshold = $data['stock_alert_threshold'];
 
         if ($data["stock_unit"] === "ml") {
             $newProduct->unit_size_ml = $data["stock_quantity"];
@@ -135,6 +137,7 @@ class ProductController extends Controller
             "stock_unit" => "nullable|in:ml,g",
             "image" => "nullable|image",
             "supplier_id" => "nullable|exists:suppliers,id",
+            "stock_alert_threshold" => "required|integer|min:1",
         ]);
 
         $data = $request->all();
@@ -147,6 +150,7 @@ class ProductController extends Controller
         $product->brand = $data["brand"];
         $product->price = $data["price"];
         $product->units_in_stock = $data["units_in_stock"];
+        $product->stock_alert_threshold = $data['stock_alert_threshold'];
 
         if ($data["stock_unit"] === "ml") {
             $product->unit_size_ml = $data["stock_quantity"];

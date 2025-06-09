@@ -59,9 +59,11 @@
                     <label for="stock_unit" class="form-label">Unità</label>
                     <select name="stock_unit" id="stock_unit" class="form-select">
                         <option value="">— Seleziona unità —</option>
-                        <option value="ml" {{ old('stock_unit', $product->unit_size_ml !== null ? 'ml' : '') == 'ml' ? 'selected' : '' }}>
+                        <option value="ml"
+                            {{ old('stock_unit', $product->unit_size_ml !== null ? 'ml' : '') == 'ml' ? 'selected' : '' }}>
                             Millilitri (ml)</option>
-                        <option value="g" {{ old('stock_unit', $product->unit_size_g !== null ? 'g' : '') == 'g' ? 'selected' : '' }}>
+                        <option value="g"
+                            {{ old('stock_unit', $product->unit_size_g !== null ? 'g' : '') == 'g' ? 'selected' : '' }}>
                             Grammi (g)</option>
                     </select>
                 </div>
@@ -82,7 +84,7 @@
             </div>
 
             {{-- Immagine --}}
-            <div class="mb-4">
+            <div class="mb-3">
                 <label for="image" class="form-label">Immagine</label>
                 <input type="file" name="image" id="image" class="form-control mb-2">
                 @if ($product->image)
@@ -96,6 +98,15 @@
                         <label for="delete_image" class="form-check-label">Rimuovi immagine</label>
                     </div>
                 @endif
+            </div>
+
+            {{-- Soglia alert magazzino --}}
+            <div class="mb-4">
+                <label for="stock_alert_threshold" class="form-label label-required">Soglia alert magazzino</label>
+                <input type="number" name="stock_alert_threshold" id="stock_alert_threshold"
+                    class="form-control"
+                    value="{{ old('stock_alert_threshold', $product->stock_alert_threshold) }}" min="1" required>
+                <div class="form-text">Invia un alert nella dashboard quando le unità in magazzino scendono a questo valore.</div>
             </div>
 
             {{-- Submit --}}

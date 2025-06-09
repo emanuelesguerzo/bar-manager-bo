@@ -33,7 +33,8 @@
             {{-- Brand Prodotto --}}
             <div class="mb-3">
                 <label for="brand" class="form-label">Marca</label>
-                <input type="text" name="brand" id="brand" class="form-control" value="{{ old('brand') }}" placeholder="Es: Kellerei Bozen">
+                <input type="text" name="brand" id="brand" class="form-control" value="{{ old('brand') }}"
+                    placeholder="Es: Kellerei Bozen">
             </div>
 
             {{-- Prezzo Prodotto --}}
@@ -81,9 +82,18 @@
             </div>
 
             {{-- Immagine --}}
-            <div class="mb-4">
+            <div class="mb-3">
                 <label for="image" class="form-label">Immagine</label>
                 <input type="file" name="image" id="image" class="form-control">
+            </div>
+
+            {{-- Soglia alert magazzino --}}
+            <div class="mb-4">
+                <label for="stock_alert_threshold" class="form-label label-required">Soglia alert magazzino</label>
+                <input type="number" name="stock_alert_threshold" id="stock_alert_threshold"
+                    class="form-control"
+                    value="{{ old('stock_alert_threshold', 3) }}" min="1" required>
+                <div class="form-text">Invia un alert nella dashboard quando le unità in magazzino scendono a questo valore.</div>
             </div>
 
             {{-- Submit --}}
