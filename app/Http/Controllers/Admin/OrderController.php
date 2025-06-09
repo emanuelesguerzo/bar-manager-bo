@@ -11,11 +11,19 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('sellables')->orderByDesc('created_at')->get();
+        $status = $request->input("status", "inviato");
 
-        return view("admin.orders.index", compact("orders"));
+        $query = Order::with(["sellables"]);
+
+        if ($status) {
+            $query->where("status", $status);
+        }
+
+        $orders = $query->orderByDesc("created_at")->paginate(6);
+
+        return view("admin.orders.index", compact("orders", "status"));
     }
 
     /**

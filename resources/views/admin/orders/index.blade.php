@@ -16,13 +16,30 @@
         {{-- Titolo Principale --}}
         <h1 class="my-4">@yield('title')</h1>
 
+        {{-- Filtra per stato --}}
+        <form method="GET" class="mb-3">
+            <div class="input-group">
+                <select name="status" class="form-select" onchange="this.form.submit()">
+                    <option value="inviato" {{ $status == 'inviato' ? 'selected' : '' }}>Inviato</option>
+                    <option value="preparazione" {{ $status == 'preparazione' ? 'selected' : '' }}>In preparazione</option>
+                    <option value="servito" {{ $status == 'servito' ? 'selected' : '' }}>Servito</option>
+                    <option value="chiuso" {{ $status == 'chiuso' ? 'selected' : '' }}>Chiuso</option>
+                </select>
+            </div>
+        </form>
+
         {{-- Grid --}}
         <div class="row">
+            @if ($orders->isEmpty())
+                <div class="alert alert-warning">
+                    Nessun ordine disponibile.
+                </div>
+            @endif
             @foreach ($orders as $order)
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
 
                     {{-- Card --}}
-                    <div class="card border rounded">
+                    <div class="card h-100  border rounded">
 
                         {{-- Numero Tavolo e data e ora ordine --}}
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -35,7 +52,6 @@
                         <ul class="list-group list-group-flush">
 
                             @foreach ($order->sellables as $sellable)
-
                                 {{-- Prodotto ordinato e prezzo --}}
                                 <li class="list-group-item">
                                     <strong>{{ $sellable->name }}</strong> x{{ $sellable->pivot->quantity }}
@@ -49,17 +65,18 @@
                             </li>
 
                             {{-- Form stato ordine --}}
-                            <li class="list-group-item d-flex">
+                            <li class="list-group-item mt-auto">
                                 <form method="POST" action="{{ route('admin.orders.update', $order) }}"
                                     class="d-flex align-items-center gap-2">
                                     @csrf
                                     @method('PATCH')
                                     <label class="mb-0 fw-semibold">Stato:</label>
-                                    <select name="status" class="form-select"
-                                        onchange="this.form.submit()">
+                                    <select name="status" class="form-select" onchange="this.form.submit()">
                                         @foreach (['inviato', 'preparazione', 'servito', 'chiuso'] as $status)
                                             <option value="{{ $status }}"
                                                 {{ $order->status === $status ? 'selected' : '' }}>
+                                                
+                                                {{-- Serve per avere la lettere iniziale in maiuscolo --}}
                                                 {{ ucfirst($status) }}
                                             </option>
                                         @endforeach
@@ -71,6 +88,10 @@
                     </div>
                 </div>
             @endforeach
+            <div class="mt-4">
+                {{-- Navigazione (Mantengo filtro attivo mentre navigo) --}}
+                {{ $orders->appends(['status' => $status])->links() }}
+            </div>
         </div>
     </div>
 @endsection
