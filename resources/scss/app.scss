@@ -1,6 +1,14 @@
 @import '~bootstrap/scss/bootstrap';
 @import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
+// CUSTOM PROPERTIES
+:root {  
+    --main-color: #daa520;
+    --sub-text-color: #ffffff;
+    --card-bg-color: #151515;
+    --body-bg-color1: #1a1a1a;
+    --body-bg-color2: #0f0f0f;
+}
 
 // Asterisco required nei form
 .label-required::after {
@@ -14,72 +22,89 @@
 }
 
 .card {
-    border: 2px solid goldenrod !important;
-    color: #ffffff;
-    background-color: #151515;
+    border: 2px solid var(--main-color) !important;
+    color: var(--sub-text-color);
+    background-color: var(--card-bg-color);
 }
 
 .list-group-item {
-    color: #ffffff;
+    color: var(--sub-text-color);
     background-color: transparent;
-    border-color: goldenrod !important;
+    border-color: var(--main-color) !important;
 }
 
 .card-footer {
-    border-top: 2px solid goldenrod ; 
+    border-top: 2px solid var(--main-color); 
 }
 
 .card-header {
-    border-bottom: 2px solid goldenrod;
+    border-bottom: 2px solid var(--main-color);
 }
 
 // Layout 
 body {
-    background-color: #151515;
-    color: #ffffff;
+    background: linear-gradient(to bottom, var(--body-bg-color1), var(--body-bg-color2));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--sub-text-color);
 }
 
 h1 {
-    color: #ffffff;
+    color: var(--sub-text-color);
     font-family: "Edu VIC WA NT Hand Pre", cursive;
     word-spacing: 0.20em;
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 h2 {
-    color: #ffffff;
+    color: var(--sub-text-color);
 }
 
 h5 {
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 .text-muted {
-    color: goldenrod !important;
+    color: var(--main-color) !important;
 }
 
 // Navbar
 .nav-custom {
-    background-color: #000000;
+    background-color: var(--body-bg-color2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    box-shadow: 0 10px 12px #0000005f !important;
+}
+
+main {
+    margin-top: 8rem;
 }
 
 .nav-link {
-  color: #ffffff;
+  color: var(--sub-text-color);
   transition: color 0.3s ease-in-out;
 }
 
 .nav-link.active {
-    color: goldenrod !important;
+    color: var(--main-color) !important;
+}
+
+.navbar .nav-link:visited {
+    color: var(--sub-text-color);
 }
 
 .nav-link:hover {
-  color: goldenrod;
+  color: var(--main-color);
 }
 
 // Navbar destra
 /* Hamburger */
 .navbar-toggler {
-    border-color: goldenrod;
+    border-color: var(--main-color);
 }
 
 .navbar-toggler-icon {
@@ -88,35 +113,35 @@ h5 {
 
 /* Menu' a tendina */
 .dropdown-menu {
-    background-color: #151515;
-    border: 1px solid goldenrod;
+    background-color: var(--body-bg-color1);
+    border: 1px solid var(--main-color);
 }
 
 .dropdown-menu .dropdown-item {
-    color: #ffffff;
+    color: var(--sub-text-color);
     transition: background-color 0.3s;
 }
 
 .dropdown-menu .dropdown-item:hover {
     background-color: #222222;
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 .navbar .dropdown-toggle.show {
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 // Bottoni
 .btn-new {
-    background-color: goldenrod;
+    background-color: var(--main-color);
     transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
 .ingredient-btn,
 .forward-btn,
 .back-btn {
-    border: 1px solid goldenrod;
-    color: #ffffff;
+    border: 1px solid var(--main-color);
+    color: var(--sub-text-color);
     transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
@@ -125,17 +150,23 @@ h5 {
 .back-btn:hover {
     background-color: #e5bb53;
     color: #000000;
-    border: 1px solid goldenrod;
+    border: 1px solid var(--main-color);
 }
 
 .modify-btn {
     color: #2ECC71;
+    border-color: var(--main-color);
     transition: color 0.6s ease-in-out;
+}
+
+.delete-btn:hover,
+.modify-btn:hover {
+    border-color: var(--main-color);
 }
 
 .add-btn {
     background-color: #0bb351;
-    color: #ffffff;
+    color: var(--sub-text-color);
     transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
@@ -146,14 +177,13 @@ h5 {
 
 .delete-btn {
     color: #E74C3C;
+    border-color: var(--main-color);
     transition: color 0.6s ease-in-out;
 }
 
-
-
 .confirm-delete-btn {
     background-color: #E74C3C;
-    color: #ffffff;
+    color: var(--sub-text-color);
     transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
@@ -167,30 +197,30 @@ h5 {
 .form-select,
 .form-control {
     background-color: #151515;
-    color: #ffffff;
-    border: 1px solid goldenrod;
+    color: var(--sub-text-color);
+    border: 1px solid var(--main-color);
 }
 
 .form-box,
 .search-box {
-    border: 2px solid goldenrod;
+    border: 2px solid var(--main-color);
 }
 
 // Input di ricerca
 #category_id,
 #search {
     background-color: #151515;
-    color: #ffffff;
-    border: 1px solid goldenrod;
+    color: var(--sub-text-color);
+    border: 1px solid var(--main-color);
 }
 
 .form-control::placeholder,
 #search::placeholder {
-    color: #ffffff;
+    color: #5e5d5d86;
 }
 
 .search-btn {
-    background-color: #2ECC71;
+    background-color: #20854a;
     transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
@@ -201,7 +231,7 @@ h5 {
 
 .btn-new:hover {
     background-color: #dbb146;
-    color: #ffffff;
+    color: var(--sub-text-color);
 }
 
 .search-btn:hover {
@@ -214,40 +244,40 @@ h5 {
 
 // Dashboard
 .alert-dashboard {
-    border: 2px solid goldenrod;
+    border: 2px solid var(--main-color);
 }
 
 // Sellables
 .sellable-detail-btn {
-    background-color: goldenrod;
+    background-color: var(--main-color);
     transition: background-color 0.7s ease-in-out, color 0.7s ease-in-out;
 }
 
 .sellable-detail-btn:hover {
     background-color: #dbb146;
-    color: #ffffff;
+    color: var(--sub-text-color);
 }
 
 // Paginazione
 .page-item.active .page-link {
-    background-color: goldenrod;
-    border-color: goldenrod;
-    color: #ffffff;
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color: var(--sub-text-color);
 }
 
 .page-link {
-    color: goldenrod;
+    color: var(--main-color);
     background-color: #151515;
     transition: background-color 0.3s ease;
 }
 
 .page-link:hover {
     background-color: #dabf5d; 
-    color: black;
+    color: #000000;
 }
 
 .pagination-info {
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 // Accordion
@@ -268,45 +298,45 @@ h5 {
 /* Bottone chiuso */
 .accordion-button.collapsed {
     background-color: #151515;
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 /* Bottone aperto */
 .accordion-button:not(.collapsed) {
-    background-color: goldenrod;
+    background-color: var(--main-color);
 }
 
 .accordion-body {
-    background-color: #222;
+    background-color: #222222;
 }
 
 // MODALS
 /* Contenitore del modale */
 .modal-content {
     background-color: #151515; 
-    border: 2px solid goldenrod;
-    color: white; 
+    border: 2px solid var(--main-color);
+    color: var(--sub-text-color); 
 }
 
 /* Header con titolo */
 .modal-header {
-    border-bottom: 1px solid goldenrod;
+    border-bottom: 1px solid var(--main-color);
     background-color: #151515;
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 /* Titolo del modale */
 .modal-title {
-    color: goldenrod;
+    color: var(--main-color);
 }
 
 /* Testo specifico da rendere bianco */
 .modal-body p {
-    color: white;
+    color: var(--sub-text-color);
 }
 
 /* Footer con pulsanti */
 .modal-footer {
     background-color: #151515;
-    border-top: 1px solid goldenrod;
+    border-top: 1px solid var(--main-color);
 }

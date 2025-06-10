@@ -1,29 +1,29 @@
-@extends('layouts.app')
+@extends("layouts.app")
 
-@section('title', 'Aggiungi un nuovo prodotto al menù')
+@section("title", "Aggiungi un nuovo prodotto al menù")
 
-@section('content')
+@section("content")
     <div class="container mt-3">
 
         {{-- Bottone Ritorno --}}
-        <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary mt-3">
-            <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
+        <a href="{{ route("admin.sellables.index") }}" class="btn back-btn">
+            ← Torna indietro
         </a>
 
         {{-- Titolo Pagina --}}
-        <h1 class="my-4">@yield('title')</h1>
+        <h1 class="my-4">@yield("title")</h1>
 
         {{-- Form --}}
-        <form class="border rounded p-3" action="{{ route('admin.sellables.store') }}" method="POST"
+        <form class="form-box mb-5 rounded p-3" action="{{ route("admin.sellables.store") }}" method="POST"
             enctype="multipart/form-data">
             @csrf
 
             {{-- Nome Prodotto --}}
             <div class="mb-3">
                 <label class="form-label label-required" for="name">Nome del prodotto</label>
-                <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name"
-                    maxlength="255" value="{{ old('name') }}" placeholder="Es: Frappè" required>
-                @error('name')
+                <input class="form-control @error("name") is-invalid @enderror" type="text" name="name" id="name"
+                    maxlength="255" value="{{ old("name") }}" placeholder="Es: Frappè" required>
+                @error("name")
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -34,7 +34,7 @@
             <div class="mb-3">
                 <label class="form-label label-required" for="price">Prezzo (€)</label>
                 <input class="form-control" type="number" name="price" id="price" step="0.01" min="0"
-                    max="9999.99" value="{{ old('price') }}" placeholder="Es: 3.00" required>
+                    max="9999.99" value="{{ old("price") }}" placeholder="Es: 3.00" required>
             </div>
 
             {{-- Ingredienti Prodotto --}}
@@ -45,7 +45,7 @@
                 <div id="ingredients-wrapper"></div>
 
                 {{-- Bottone aggiunta ingrediente --}}
-                <button type="button" class="btn btn-outline-primary mt-2" id="add-ingredient">
+                <button type="button" class="btn ingredient-btn mt-2" id="add-ingredient">
                     + Aggiungi ingrediente
                 </button>
             </div>
@@ -56,7 +56,7 @@
                 <select class="form-select" name="category_id" id="category_id">
                     <option value="">— Seleziona categoria —</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}" {{ old("category_id") == $category->id ? "selected" : "" }}>
                             {{ $category->name }}</option>
                     @endforeach
                 </select>
@@ -67,7 +67,7 @@
                 <label class="form-label" for="form-check">Visibilità prodotto</label>
                 <div class="form-check">
                     <input type="checkbox" name="is_visible" id="is_visible" class="form-check-input"
-                        {{ old('is_visible', true) ? 'checked' : '' }}>
+                        {{ old("is_visible", true) ? "checked" : "" }}>
                     <label for="is_visible" class="form-check-label">Visibile nel menù</label>
                 </div>
             </div>
@@ -82,19 +82,19 @@
             <div class="mb-4">
                 <label class="form-label" for="description">Descrizione del prodotto</label>
                 <textarea class="form-control" name="description" id="description" rows="2"
-                    placeholder="Es: Bevanda a base di gelato">{{ old('description') }}</textarea>
+                    placeholder="Es: Bevanda a base di gelato">{{ old("description") }}</textarea>
             </div>
 
             {{-- Submit --}}
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success w-100">Salva</button>
+                <button type="submit" class="btn btn-new w-100">Salva</button>
             </div>
 
         </form>
         
         {{-- Template Ingredienti --}}
         <template id="ingredient-template">
-            <div class="ingredient-group border rounded p-3 mb-3">
+            <div class="ingredient-group form-box rounded p-3 mb-3">
                 <div class="row align-items-end">
 
                     {{-- Selezione Ingrediente --}}
@@ -126,7 +126,7 @@
 
                     {{-- Rimuovi Ingrediente --}}
                     <div class="col-md-1 text-end">
-                        <button type="button" class="btn btn-danger remove-ingredient">
+                        <button type="button" class="btn delete-btn remove-ingredient">
                             <i class="fa-solid fa-times"></i>
                         </button>
                     </div>

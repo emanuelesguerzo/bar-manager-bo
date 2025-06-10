@@ -1,30 +1,30 @@
-@extends('layouts.app')
+@extends("layouts.app")
 
-@section('title', 'Modifica prodotto del menù')
+@section("title", "Modifica prodotto del menù")
 
-@section('content')
+@section("content")
     <div class="container mt-3">
 
         {{-- Bottone Ritorno --}}
-        <a href="{{ route('admin.sellables.index') }}" class="btn back-btn mt-3">
-            <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
+        <a href="{{ route("admin.sellables.index") }}" class="btn back-btn">
+            ← Torna indietro
         </a>
 
         {{-- Titolo Pagina --}}
-        <h1 class="mt-5 mb-4">@yield('title')</h1>
+        <h1 class="my-4">@yield("title")</h1>
 
         {{-- Form --}}
-        <form class="form-box mb-5 rounded p-3" action="{{ route('admin.sellables.update', $sellable) }}" method="POST"
+        <form class="form-box mb-5 rounded p-3" action="{{ route("admin.sellables.update", $sellable) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
-            @method('PUT')
+            @method("PUT")
 
             {{-- Nome Prodotto --}}
             <div class="mb-3">
                 <label class="form-label label-required" for="name">Nome del Prodotto</label>
-                <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name"
+                <input class="form-control @error("name") is-invalid @enderror" type="text" name="name" id="name"
                     maxlength="255" value="{{ $sellable->name }}" required>
-                @error('name')
+                @error("name")
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -34,9 +34,9 @@
             {{-- Prezzo Prodotto --}}
             <div class="mb-3">
                 <label class="form-label label-required" for="price">Prezzo del Prodotto</label>
-                <input class="form-control @error('price') is-invalid @enderror" type="number" name="price"
+                <input class="form-control @error("price") is-invalid @enderror" type="number" name="price"
                     id="price" step="0.01" min="0" max="9999.99" value="{{ $sellable->price }}" required>
-                @error('price')
+                @error("price")
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -60,7 +60,7 @@
                                         <option value="">-- Seleziona ingrediente --</option>
                                         @foreach ($products as $item)
                                             <option value="{{ $item->id }}"
-                                                {{ $product->id == $item->id ? 'selected' : '' }}>
+                                                {{ $product->id == $item->id ? "selected" : "" }}>
                                                 {{ $item->name }}
                                             </option>
                                         @endforeach
@@ -78,11 +78,11 @@
                                 <div class="col-md-2">
                                     <label class="form-label">Unità</label>
                                     <select name="unit[]" class="form-select" required>
-                                        <option value="ml" {{ $product->pivot->unit == 'ml' ? 'selected' : '' }}>ml
+                                        <option value="ml" {{ $product->pivot->unit == "ml" ? "selected" : "" }}>ml
                                         </option>
-                                        <option value="g" {{ $product->pivot->unit == 'g' ? 'selected' : '' }}>g
+                                        <option value="g" {{ $product->pivot->unit == "g" ? "selected" : "" }}>g
                                         </option>
-                                        <option value="pz" {{ $product->pivot->unit == 'pz' ? 'selected' : '' }}>pz
+                                        <option value="pz" {{ $product->pivot->unit == "pz" ? "selected" : "" }}>pz
                                         </option>
                                     </select>
                                 </div>
@@ -112,7 +112,7 @@
                     <option value="">— Seleziona categoria —</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
-                            {{ old('category_id', $sellable->category_id) == $category->id ? 'selected' : '' }}>
+                            {{ old("category_id", $sellable->category_id) == $category->id ? "selected" : "" }}>
                             {{ $category->name }}</option>
                     @endforeach
                 </select>
@@ -123,7 +123,7 @@
                 <label class="form-label" for="form-check">Visibilità prodotto</label>
                 <div class="form-check">
                     <input type="checkbox" name="is_visible" id="is_visible" class="form-check-input"
-                        {{ $sellable->is_visible ? 'checked' : '' }}>
+                        {{ $sellable->is_visible ? "checked" : "" }}>
                     <label class="mb-2" for="is_visible" class="form-check-label">Visibile nel menù</label>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                 @if ($sellable->image)
                     <div class="mb-3">
                         <p>Immagine attuale:</p>
-                        <img src="{{ asset('storage/' . $sellable->image) }}" alt="{{ $sellable->name }}"
+                        <img src="{{ asset("storage/" . $sellable->image) }}" alt="{{ $sellable->name }}"
                             class="img-fluid rounded" style="max-height: 200px;">
                     </div>
                     <div class="form-check mb-3">

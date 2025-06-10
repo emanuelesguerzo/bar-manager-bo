@@ -1,42 +1,43 @@
-@extends('layouts.app')
+@extends("layouts.app")
 
-@section('title', 'Modifica un prodotto')
+@section("title", "Modifica un prodotto")
 
-@section('content')
+@section("content")
     <div class="container mt-3">
 
         {{-- Bottone Ritorno --}}
-        <a href="{{ route('admin.products.index') }}" class="btn back-btn mt-3">
-            <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
+        <a href="{{ route("admin.products.index") }}" class="btn back-btn">
+            ← Torna indietro
         </a>
 
         {{-- Titolo Pagina --}}
-        <h1 class="my-4">@yield('title')</h1>
+        <h1 class="my-4">@yield("title")</h1>
 
-        <form class="form-box rounded p-3 mb-5" method="POST" action="{{ route('admin.products.update', $product) }}"
+        {{-- Form --}}
+        <form class="form-box rounded p-3 mb-5" method="POST" action="{{ route("admin.products.update", $product) }}"
             enctype="multipart/form-data">
             @csrf
-            @method('PUT')
+            @method("PUT")
 
             {{-- Nome Prodotto --}}
             <div class="mb-3">
                 <label for="name" class="form-label label-required">Nome prodotto</label>
                 <input type="text" name="name" id="name" class="form-control"
-                    value="{{ old('name', $product->name) }}" required>
+                    value="{{ old("name", $product->name) }}" required>
             </div>
 
             {{-- Brand Prodotto --}}
             <div class="mb-3">
                 <label for="brand" class="form-label">Marca</label>
                 <input type="text" name="brand" id="brand" class="form-control"
-                    value="{{ old('brand', $product->brand) }}" placeholder="Es: Kellerei Bozen">
+                    value="{{ old("brand", $product->brand) }}" placeholder="Es: Kellerei Bozen">
             </div>
 
             {{-- Prezzo Prodotto --}}
             <div class="mb-3">
                 <label for="price" class="form-label label-required">Prezzo (€)</label>
                 <input type="number" step="0.01" name="price" id="price" class="form-control"
-                    value="{{ old('price', $product->price) }}" required>
+                    value="{{ old("price", $product->price) }}" required>
             </div>
 
             {{-- Quantità + unità di misura --}}
@@ -44,7 +45,7 @@
                 <div class="col-md-6">
                     <label for="stock_quantity" class="form-label">Quantità per unità</label>
                     <input type="number" name="stock_quantity" id="stock_quantity" class="form-control" min="0"
-                        value="{{ old('stock_quantity') ?? ($product->unit_size_ml ?? $product->unit_size_g) }}">
+                        value="{{ old("stock_quantity") ?? ($product->unit_size_ml ?? $product->unit_size_g) }}">
                 </div>
 
                 <div class="col-md-6">
@@ -52,10 +53,10 @@
                     <select name="stock_unit" id="stock_unit" class="form-select">
                         <option value="">— Seleziona unità —</option>
                         <option value="ml"
-                            {{ old('stock_unit', $product->unit_size_ml !== null ? 'ml' : '') == 'ml' ? 'selected' : '' }}>
+                            {{ old("stock_unit", $product->unit_size_ml !== null ? "ml" : "") == "ml" ? "selected" : "" }}>
                             Millilitri (ml)</option>
                         <option value="g"
-                            {{ old('stock_unit', $product->unit_size_g !== null ? 'g' : '') == 'g' ? 'selected' : '' }}>
+                            {{ old("stock_unit", $product->unit_size_g !== null ? "g" : "") == "g" ? "selected" : "" }}>
                             Grammi (g)</option>
                     </select>
                 </div>
@@ -68,7 +69,7 @@
                     <option value="">— Seleziona fornitore —</option>
                     @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->id }}"
-                            {{ old('supplier_id', $product->supplier_id) == $supplier->id ? 'selected' : '' }}>
+                            {{ old("supplier_id", $product->supplier_id) == $supplier->id ? "selected" : "" }}>
                             {{ $supplier->name }}
                         </option>
                     @endforeach
@@ -82,7 +83,7 @@
                 @if ($product->image)
                     <div class="mb-3">
                         <p>Immagine attuale:</p>
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                        <img src="{{ asset("storage/" . $product->image) }}" alt="{{ $product->name }}"
                             class="img-fluid rounded" style="max-height: 200px;">
                     </div>
                     <div class="form-check my-2">
@@ -96,7 +97,7 @@
             <div class="mb-4">
                 <label for="stock_alert_threshold" class="form-label label-required">Soglia alert magazzino</label>
                 <input type="number" name="stock_alert_threshold" id="stock_alert_threshold" class="form-control"
-                    value="{{ old('stock_alert_threshold', $product->stock_alert_threshold) }}" min="1" required>
+                    value="{{ old("stock_alert_threshold", $product->stock_alert_threshold) }}" min="1" required>
                 <div class="form-text text-muted">Invia un alert nella dashboard quando le unità in magazzino scendono a questo
                     valore.</div>
             </div>

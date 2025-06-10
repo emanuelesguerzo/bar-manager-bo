@@ -15,20 +15,26 @@
 
         {{-- Torna indietro --}}
         <div class="mt-4">
-            <a href="{{ route('admin.products.index') }}" class="btn back-btn mb-3">← Torna indietro</a>
+            <a href="{{ route('admin.products.index') }}" class="btn back-btn">← Torna indietro</a>
         </div>
 
+        {{-- Card --}}
+        <div class="card h-100 d-flex flex-column mt-3">
 
-        <div class="card h-100 d-flex flex-column mt-1">
+            {{-- Immagine --}}
             @if ($product->image)
                 <div class="card-header text-center">
                     <img class="img-fluid rounded" style="max-width: 100%; width: 400px; object-fit: cover;"
                         src="{{ asset('storage/' . $product->image) }}" alt="Immagine della pagina {{ $product->name }}">
                 </div>
             @endif
+
+            {{-- Nome Prodotto --}}
             <div class="card-body">
                 <h5 class="card-title mb-0">{{ $product->name }}</h5>
             </div>
+
+            {{-- Marca, Fornitore, Prezzo, Dimensione Prodotto, Quantita' in Stock, Stock totale in ml o g --}}
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Marca: <strong class="text-muted">{{ $product->brand }}</strong></li>
                 <li class="list-group-item">Fornitore: <strong class="text-muted">{{ $product->supplier->name }}</strong>
@@ -46,7 +52,6 @@
                 @if ($product->stock_ml)
                     <li class="list-group-item">Stock: <strong class="text-muted">{{ $product->stock_ml }} ml</strong></li>
                 @endif
-
                 @if ($product->stock_g)
                     <li class="list-group-item">Stock: <strong class="text-muted">{{ $product->stock_g }} g</strong></li>
                 @endif
@@ -66,6 +71,7 @@
                                 aria-labelledby="heading-{{ $product->id }}"
                                 data-bs-parent="#accordion-{{ $product->id }}">
                                 <div class="accordion-body">
+
                                     {{-- Aggiungi stock --}}
                                     <form method="POST" action="{{ route('admin.products.addStock', $product) }}"
                                         class="mb-2">
@@ -88,7 +94,7 @@
                                         </div>
                                     </form>
 
-                                    {{-- Scarico Completo --}}
+                                    {{-- Scarico completo stock --}}
                                     <form method="POST" action="{{ route('admin.products.clearStock', $product) }}">
                                         @csrf
                                         <button type="button" class="btn confirm-delete-btn w-100 mt-2"
@@ -103,6 +109,8 @@
                 </li>
 
             </ul>
+
+            {{-- Bottoni Modifica e Elimina --}}
             <div class="card-footer d-flex justify-content-between">
                 <a class="btn modify-btn" href="{{ route('admin.products.edit', $product) }}"><i class="fa-solid fa-pencil"></i></a>
                 <button type="button" class="btn delete-btn" data-bs-toggle="modal"
@@ -111,6 +119,8 @@
                 </button>
             </div>
         </div>
+
+        {{-- Navigazione tra prodotti --}}
         <div class="d-flex justify-content-between my-4">
             <a href="{{ route('admin.products.show', $previous->slug) }}" class="btn back-btn">
                 ← {{ $previous->name }}
@@ -120,5 +130,8 @@
             </a>
         </div>
     </div>
+
+    {{-- Modale --}}
     <x-modal.delete-product :product="$product" />
+
 @endsection

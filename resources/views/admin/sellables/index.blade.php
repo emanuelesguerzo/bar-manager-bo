@@ -1,14 +1,14 @@
-@extends('layouts.app')
+@extends("layouts.app")
 
-@section('title', 'Il nostro menù')
+@section("title", "Il nostro menù")
 
-@section('content')
+@section("content")
     <div class="container mt-3">
 
         {{-- Alert Successo --}}
-        @if (session('success'))
+        @if (session("success"))
             <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                {{ session('success') }}
+                {{ session("success") }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
@@ -16,21 +16,21 @@
         <div
             class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between my-4 gap-2">
             {{-- Titolo Principale --}}
-            <h1 class="m-0">@yield('title')</h1>
+            <h1 class="m-0">@yield("title")</h1>
 
             {{-- Aggiungi Nuovo --}}
-            <a class="btn btn-new ms-auto mt-2 mt-md-0" href="{{ route('admin.sellables.create') }}"><i
+            <a class="btn btn-new ms-auto mt-2 mt-md-0" href="{{ route("admin.sellables.create") }}"><i
                 class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
         {{-- Ricerca --}}
-        <form method="GET" action="{{ route('admin.sellables.index') }}" class="search-box rounded p-2 mb-3 ">
+        <form method="GET" action="{{ route("admin.sellables.index") }}" class="search-box rounded p-2 mb-3 ">
             <div class="row g-2 align-items-end">
 
                 {{-- Campo ricerca --}}
                 <div class="col-md-4">
                     <label for="search" class="form-label">Cerca per nome</label>
-                    <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control"
+                    <input type="text" name="search" id="search" value="{{ request("search") }}" class="form-control"
                         placeholder="Es: Cappuccino...">
                 </div>
 
@@ -41,7 +41,7 @@
                         <option value="">Tutte le categorie</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}"
-                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ request("category_id") == $category->id ? "selected" : "" }}>
                                 {{ $category->name }}
                             </option>
                         @endforeach
@@ -53,7 +53,7 @@
                     <button class="btn search-btn w-100" type="submit">Cerca</button>
                 </div>
                 <div class="col-md-2">
-                    <a href="{{ route('admin.sellables.index') }}" class="btn reset-btn w-100">Reset</a>
+                    <a href="{{ route("admin.sellables.index") }}" class="btn reset-btn w-100">Reset</a>
                 </div>
             </div>
         </form>
@@ -72,9 +72,9 @@
                             <div class="card-header p-0">
                                 <img class="img-fluid w-100"
                                     style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
-                                    src="{{ asset('storage/' . $sellable->image) }}"
+                                    src="{{ asset("storage/" . $sellable->image) }}"
                                     alt="Immagine della pagina {{ $sellable->name }}">
-                                <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
+                                <a href="{{ route("admin.sellables.show", $sellable->slug) }}"
                                     class="btn btn-new position-absolute top-0 end-0 me-2 mt-2 rounded-circle"><i
                                         class="fa-solid fa-magnifying-glass"></i></a>
                             </div>
@@ -93,7 +93,7 @@
 
                         {{-- Bottoni Modifica e Elimina --}}
                         <div class="card-footer d-flex justify-content-between">
-                            <a class="btn modify-btn" href="{{ route('admin.sellables.edit', $sellable) }}">
+                            <a class="btn modify-btn" href="{{ route("admin.sellables.edit", $sellable) }}">
                                 <i class="fa-solid fa-pencil"></i>
                             </a>
                             <button type="button" class="btn delete-btn" data-bs-toggle="modal"

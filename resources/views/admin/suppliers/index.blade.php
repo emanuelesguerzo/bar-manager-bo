@@ -42,7 +42,7 @@
 
                         {{-- Nome Fornitore --}}
                         <div class="card-header d-flex align-content-center">
-                            <h5 class="card-title mb-0">{{ $supplier['name'] }}</h5>
+                            <h5 class="card-title mb-0">{{ $supplier->name }}</h5>
                         </div>
 
                         {{-- Email e Telefono --}}
@@ -50,12 +50,12 @@
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 @if ($supplier->email)
                                     <a class="btn btn-new"
-                                        href="mailto:{{ $supplier['email'] }}?subject=Nuovo ordine&body=Buongiorno,%0A%0Aecco il nostro nuovo ordine:"><i
+                                        href="mailto:{{ $supplier->email }}?subject=Nuovo ordine&body=Buongiorno,%0A%0Aecco il nostro nuovo ordine:"><i
                                             class="fa-solid fa-envelope me-2"></i>Scrivi
                                         Mail</a>
                                 @endif
                                 @if ($supplier->phone)
-                                    <a class="btn btn-new" href="tel:{{ $supplier['phone'] }}">
+                                    <a class="btn btn-new" href="tel:{{ $supplier->phone }}">
                                         <i class="fa-solid fa-phone me-2"></i>Chiama
                                     </a>
                                 @endif
