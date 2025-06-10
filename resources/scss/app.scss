@@ -14,7 +14,7 @@
 }
 
 .card {
-    border: 2px solid goldenrod;
+    border: 2px solid goldenrod !important;
     color: #ffffff;
     background-color: #151515;
 }
@@ -22,11 +22,11 @@
 .list-group-item {
     color: #ffffff;
     background-color: transparent;
-    border-color: goldenrod;
+    border-color: goldenrod !important;
 }
 
 .card-footer {
-    border-top: 2px solid goldenrod; 
+    border-top: 2px solid goldenrod ; 
 }
 
 .card-header {

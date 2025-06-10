@@ -103,7 +103,7 @@
 
             {{-- Submit --}}
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-new w-100">Salva</button>
+                <button type="submit" class="btn btn-new w-100">Salva modifiche</button>
             </div>
 
         </form>

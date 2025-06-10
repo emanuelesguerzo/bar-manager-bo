@@ -4,15 +4,21 @@
 
 @section('content')
     <div class="container">
+
+        {{-- Alert Success --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
+        {{-- Torna indietro --}}
         <div class="mt-4">
-            <a href="{{ route('admin.products.index') }}" class="btn btn-secondary mb-3">← Torna indietro</a>
+            <a href="{{ route('admin.products.index') }}" class="btn back-btn mb-3">← Torna indietro</a>
         </div>
+
+
         <div class="card h-100 d-flex flex-column mt-1">
             @if ($product->image)
                 <div class="card-header text-center">
@@ -21,19 +27,28 @@
                 </div>
             @endif
             <div class="card-body">
-                <h5 class="card-title">{{ $product['name'] }}</h5>
-                <p class="card-text">{{ $product['brand'] }}</p>
+                <h5 class="card-title mb-0">{{ $product->name }}</h5>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Prezzo:</strong> {{ $product['price'] }} €</li>
-                <li class="list-group-item"><strong>Fornitore:</strong> {{ $product->supplier->name }}</li>
-                <li class="list-group-item"><strong>In Magazzino:</strong> {{ $product['units_in_stock'] }}</li>
+                <li class="list-group-item">Marca: <strong class="text-muted">{{ $product->brand }}</strong></li>
+                <li class="list-group-item">Fornitore: <strong class="text-muted">{{ $product->supplier->name }}</strong>
+                </li>
+                <li class="list-group-item">Prezzo: <strong class="text-muted">{{ $product->price }} €</strong>
+                    @if ($product->unit_size_ml)
+                        <span>/ {{ $product->unit_size_ml }} ml</span>
+                    @endif
+                    @if ($product->unit_size_g)
+                        <span>/ {{ $product->unit_size_g }} g</span>
+                    @endif
+                </li>
+                <li class="list-group-item">In magazzino: <strong class="text-muted">{{ $product->units_in_stock }}
+                    </strong>unità</li>
                 @if ($product->stock_ml)
-                    <li class="list-group-item"><strong>Stock:</strong> {{ $product->stock_ml }} ml</li>
+                    <li class="list-group-item">Stock: <strong class="text-muted">{{ $product->stock_ml }} ml</strong></li>
                 @endif
 
                 @if ($product->stock_g)
-                    <li class="list-group-item"><strong>Stock:</strong> {{ $product->stock_g }} g</li>
+                    <li class="list-group-item">Stock: <strong class="text-muted">{{ $product->stock_g }} g</strong></li>
                 @endif
 
                 {{-- Carico e scarico merce magazzino --}}
@@ -57,8 +72,8 @@
                                         @csrf
                                         <div class="input-group">
                                             <input type="number" name="new_units" min="1"
-                                                class="form-control flex-grow-1" placeholder="Aggiungi unità">
-                                            <button class="btn btn-success w-btn">+ Aggiungi</button>
+                                                class="form-control flex-grow-1" placeholder="Unità">
+                                            <button class="btn add-btn w-btn">+ Aggiungi</button>
                                         </div>
                                     </form>
 
@@ -68,15 +83,15 @@
                                         <div class="input-group">
                                             <input type="number" name="remove_units" min="1"
                                                 max="{{ $product->units_in_stock }}" class="form-control flex-grow-1"
-                                                placeholder="Scarica unità">
-                                            <button class="btn btn-danger w-btn">- Scarica</button>
+                                                placeholder="Unità">
+                                            <button class="btn confirm-delete-btn w-btn">- Scarica</button>
                                         </div>
                                     </form>
 
                                     {{-- Scarico Completo --}}
                                     <form method="POST" action="{{ route('admin.products.clearStock', $product) }}">
                                         @csrf
-                                        <button type="button" class="btn btn-outline-warning w-100 mt-2"
+                                        <button type="button" class="btn confirm-delete-btn w-100 mt-2"
                                             data-bs-toggle="modal" data-bs-target="#clearStockModal-{{ $product->id }}">
                                             <i class="fa-solid fa-arrows-rotate me-2"></i> Scarico completo
                                         </button>
@@ -89,18 +104,18 @@
 
             </ul>
             <div class="card-footer d-flex justify-content-between">
-                <a class="btn btn-outline-success" href="{{ route('admin.products.edit', $product) }}">Modifica</a>
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                <a class="btn modify-btn" href="{{ route('admin.products.edit', $product) }}"><i class="fa-solid fa-pencil"></i></a>
+                <button type="button" class="btn delete-btn" data-bs-toggle="modal"
                     data-bs-target="#destroyModal-{{ $product->id }}">
-                    Elimina
+                    <i class="fa-solid fa-trash-can"></i>
                 </button>
             </div>
         </div>
         <div class="d-flex justify-content-between my-4">
-            <a href="{{ route('admin.products.show', $previous->slug) }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.products.show', $previous->slug) }}" class="btn back-btn">
                 ← {{ $previous->name }}
             </a>
-            <a href="{{ route('admin.products.show', $next->slug) }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.products.show', $next->slug) }}" class="btn forward-btn">
                 {{ $next->name }} →
             </a>
         </div>

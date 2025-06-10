@@ -60,8 +60,8 @@
                             @endforeach
 
                             {{-- Prezzo totale ordine --}}
-                            <li class="list-group-item ">
-                                <p class="fw-bold mb-0">Totale: {{ number_format($order->total, 2) }} €</p>
+                            <li class="list-group-item">
+                                <p class="mb-0">Totale: <span class="fw-bold text-muted">{{ number_format($order->total, 2) }} €</span></p>
                             </li>
 
                         </ul>
@@ -74,12 +74,12 @@
                                 @method('PATCH')
                                 <label class="mb-0 fw-semibold">Stato:</label>
                                 <select name="status" class="form-select" onchange="this.form.submit()">
-                                    @foreach (['inviato', 'preparazione', 'servito', 'chiuso'] as $status)
-                                        <option value="{{ $status }}"
-                                            {{ $order->status === $status ? 'selected' : '' }}>
+                                    @foreach (['inviato', 'preparazione', 'servito', 'chiuso'] as $optionStatus)
+                                        <option value="{{ $optionStatus }}"
+                                            {{ $order->status === $optionStatus ? 'selected' : '' }}>
 
                                             {{-- Serve per avere la lettere iniziale in maiuscolo --}}
-                                            {{ ucfirst($status) }}
+                                            {{ ucfirst($optionStatus) }}
                                         </option>
                                     @endforeach
                                 </select>

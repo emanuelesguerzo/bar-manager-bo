@@ -106,11 +106,6 @@
                                         class="text-muted">{{ $product->stock_g }} g</span></li>
                             @endif
 
-                            {{-- <li class="list-group-item">
-                                <strong>Fornitore:</strong>
-                                {{ $product->supplier?->name ?? '—' }}
-                            </li> --}}
-
                             {{-- Carico e scarico merce magazzino --}}
                             <li class="list-group-item p-0">
                                 <div class="accordion" id="accordion-{{ $product->id }}">

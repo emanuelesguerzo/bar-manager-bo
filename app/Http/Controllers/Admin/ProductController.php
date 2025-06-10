@@ -197,7 +197,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route("admin.products.index")->with("success", "Il prodotto $product->name è stato aggiornato con successo!");
+        return redirect()->route("admin.products.show", $product)->with("success", "Il prodotto $product->name è stato aggiornato con successo!");
     }
 
     /**
@@ -279,7 +279,6 @@ class ProductController extends Controller
         $product->units_in_stock = 0;
         $product->save();
 
-        return redirect()->route("admin.products.index")
-            ->with("success", "Scarico magazzino completo di $product->name.");
+        return redirect()->route("admin.products.index")->with("success", "Scarico magazzino completo di $product->name.");
     }
 }

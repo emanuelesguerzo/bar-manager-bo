@@ -6,7 +6,7 @@
     <div class="container mt-3">
 
         {{-- Bottone Ritorno --}}
-        <a href="{{ route('admin.suppliers.index') }}" class="btn btn-outline-secondary mt-3">
+        <a href="{{ route('admin.suppliers.index') }}" class="btn back-btn mt-3">
             <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
         </a>
 
@@ -14,7 +14,7 @@
         <h1 class="my-4">@yield('title')</h1>
 
         {{-- Form Fornitori --}}
-        <form class="border rounded p-3" action="{{ route('admin.suppliers.update', $supplier) }}" method="POST">
+        <form class="form-box rounded p-3" action="{{ route('admin.suppliers.update', $supplier) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -57,7 +57,7 @@
 
             {{-- Submit --}}
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success w-100">Salva</button>
+                <button type="submit" class="btn btn-new w-100">Salva modifiche</button>
             </div>
 
         </form>

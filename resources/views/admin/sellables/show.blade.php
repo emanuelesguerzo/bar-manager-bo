@@ -39,18 +39,18 @@
             <ul class="list-group list-group-flush">
 
                 {{-- Prezzo --}}
-                <li class="list-group-item"><strong>Prezzo:</strong> {{ $sellable->price }} €</li>
+                <li class="list-group-item"><strong class="text-muted">Prezzo:</strong> {{ $sellable->price }} €</li>
 
                 {{-- Categoria --}}
                 @if ($sellable->category)
-                    <li class="list-group-item"><strong>Categoria:</strong> {{ $sellable->category->name }}</li>
+                    <li class="list-group-item"><strong class="text-muted">Categoria:</strong> {{ $sellable->category->name }}</li>
                 @endif
 
                 {{-- Ingredienti --}}
                 <li class="list-group-item">
-                    <strong>Ingredienti:</strong>
+                    <strong class="text-muted">Ingredienti:</strong>
                     @if ($sellable->products->isNotEmpty())
-                        <ul class="mt-2 ps-3">
+                        <ul class="mt-2">
                             @foreach ($sellable->products as $product)
                                 <li>
                                     {{ $product->name }} - {{ $product->pivot->quantity }} {{ $product->pivot->unit }}
