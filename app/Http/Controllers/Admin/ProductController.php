@@ -132,7 +132,6 @@ class ProductController extends Controller
             "name" => "required|string|max:255|unique:products,name," . $product->id,
             "brand" => "nullable|string|max:255",
             "price" => "required|numeric|min:0|max:9999.99",
-            "units_in_stock" => "required|integer|min:0",
             "stock_quantity" => "nullable|integer|min:0",
             "stock_unit" => "nullable|in:ml,g",
             "image" => "nullable|image",
@@ -149,17 +148,28 @@ class ProductController extends Controller
         $product->name = $data["name"];
         $product->brand = $data["brand"];
         $product->price = $data["price"];
-        $product->units_in_stock = $data["units_in_stock"];
         $product->stock_alert_threshold = $data['stock_alert_threshold'];
 
         if ($data["stock_unit"] === "ml") {
-            $product->unit_size_ml = $data["stock_quantity"];
-            $product->stock_ml = $data["stock_quantity"] * $data["units_in_stock"];
+
+            // Calcolo solo se la quantità è cambiata
+            if ($data["stock_quantity"] != $product->unit_size_ml) {
+                $product->unit_size_ml = $data["stock_quantity"];
+                $product->stock_ml = $data["stock_quantity"] * $product->units_in_stock;
+            }
+
+            // Pulizia campi alternativi
             $product->unit_size_g = null;
             $product->stock_g = null;
         } elseif ($data["stock_unit"] === "g") {
-            $product->unit_size_g = $data["stock_quantity"];
-            $product->stock_g = $data["stock_quantity"] * $data["units_in_stock"];
+
+            // Calcolo solo se la quantità è cambiata
+            if ($data["stock_quantity"] != $product->unit_size_g) {
+                $product->unit_size_g = $data["stock_quantity"];
+                $product->stock_g = $data["stock_quantity"] * $product->units_in_stock;
+            }
+
+            // Pulizia campi alternativi
             $product->unit_size_ml = null;
             $product->stock_ml = null;
         }
@@ -272,5 +282,4 @@ class ProductController extends Controller
         return redirect()->route("admin.products.index")
             ->with("success", "Scarico magazzino completo di $product->name.");
     }
-
 }

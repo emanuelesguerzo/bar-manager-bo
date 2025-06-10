@@ -6,15 +6,15 @@
     <div class="container mt-3">
 
         {{-- Bottone Ritorno --}}
-        <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary mt-3">
+        <a href="{{ route('admin.sellables.index') }}" class="btn back-btn mt-3">
             <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
         </a>
 
         {{-- Titolo Pagina --}}
-        <h1 class="my-4">@yield('title')</h1>
+        <h1 class="mt-5 mb-4">@yield('title')</h1>
 
         {{-- Form --}}
-        <form class="border rounded p-3" action="{{ route('admin.sellables.update', $sellable) }}" method="POST"
+        <form class="form-box mb-5 rounded p-3" action="{{ route('admin.sellables.update', $sellable) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -50,7 +50,7 @@
                 {{-- Wrapper dinamico --}}
                 <div id="ingredients-wrapper">
                     @foreach ($sellable->products as $product)
-                        <div class="ingredient-group border rounded p-3 mb-3">
+                        <div class="ingredient-group form-box rounded p-3 mb-3">
                             <div class="row align-items-end">
 
                                 {{-- Selezione Prodotto --}}
@@ -89,7 +89,7 @@
 
                                 {{-- Rimuovi --}}
                                 <div class="col-md-1 text-end">
-                                    <button type="button" class="btn btn-danger remove-ingredient">
+                                    <button type="button" class="btn delete-btn remove-ingredient">
                                         <i class="fa-solid fa-times"></i>
                                     </button>
                                 </div>
@@ -100,7 +100,7 @@
                 </div>
 
                 {{-- Bottone aggiunta ingrediente --}}
-                <button type="button" class="btn btn-outline-primary mt-2" id="add-ingredient">
+                <button type="button" class="btn ingredient-btn mt-2" id="add-ingredient">
                     + Aggiungi ingrediente
                 </button>
             </div>
@@ -131,7 +131,7 @@
             {{-- Immagine Prodotto --}}
             <div class="mb-3">
                 <label class="form-label" for="image">Immagine del Prodotto</label>
-                <input class="form-control" type="file" name="image" id="image">
+                <input class="form-control mb-2" type="file" name="image" id="image">
                 @if ($sellable->image)
                     <div class="mb-3">
                         <p>Immagine attuale:</p>
@@ -154,14 +154,14 @@
 
             {{-- Submit --}}
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success w-100">Salva</button>
+                <button type="submit" class="btn btn-new w-100">Salva</button>
             </div>
 
         </form>
 
         {{-- Template Ingredienti --}}
         <template id="ingredient-template">
-            <div class="ingredient-group border rounded p-3 mb-3">
+            <div class="ingredient-group form-box rounded p-3 mb-3">
                 <div class="row align-items-end">
 
                     {{-- Selezione Ingrediente --}}
@@ -194,7 +194,7 @@
 
                     {{-- Rimuovi Ingrediente --}}
                     <div class="col-md-1 text-end">
-                        <button type="button" class="btn btn-danger remove-ingredient">
+                        <button type="button" class="btn delete-btn remove-ingredient">
                             <i class="fa-solid fa-times"></i>
                         </button>
                     </div>

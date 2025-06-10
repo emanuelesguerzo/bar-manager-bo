@@ -7,22 +7,23 @@
 
         {{-- Alert Successo --}}
         @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
-        
+
         {{-- Titolo Principale --}}
         <h1 class="my-4">@yield('title')</h1>
-        
+
         {{-- Aggiungi Nuovo --}}
         <div class="d-flex justify-content-end my-3">
-            <a class="btn btn-primary" href="{{ route('admin.sellables.create') }}"><i class="fa-solid fa-plus me-2"></i>Nuovo</a>
+            <a class="btn btn-new" href="{{ route('admin.sellables.create') }}"><i
+                    class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
         {{-- Ricerca --}}
-        <form method="GET" action="{{ route('admin.sellables.index') }}" class="border rounded p-2 mb-4 " >
+        <form method="GET" action="{{ route('admin.sellables.index') }}" class="search-box rounded p-2 mb-3 ">
             <div class="row g-2 align-items-end">
 
                 {{-- Campo ricerca --}}
@@ -48,10 +49,10 @@
 
                 {{-- Bottoni Cerca e Reset --}}
                 <div class="col-md-2">
-                    <button class="btn btn-primary w-100" type="submit">Cerca</button>
+                    <button class="btn search-btn w-100" type="submit">Cerca</button>
                 </div>
                 <div class="col-md-2">
-                    <a href="{{ route('admin.sellables.index') }}" class="btn btn-outline-secondary w-100">Reset</a>
+                    <a href="{{ route('admin.sellables.index') }}" class="btn reset-btn w-100">Reset</a>
                 </div>
             </div>
         </form>
@@ -64,51 +65,39 @@
 
                     {{-- Card --}}
                     <div class="card h-100 d-flex flex-column justify-content-between">
-                        
+
                         {{-- Immagine --}}
                         @if ($sellable->image)
-                            <div class="card-header bg-dark p-0">
-                                <img class="img-fluid w-100 bg-dark rounded-top rounded-bottom-0"
+                            <div class="card-header p-0">
+                                <img class="img-fluid w-100"
                                     style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
                                     src="{{ asset('storage/' . $sellable->image) }}"
                                     alt="Immagine della pagina {{ $sellable->name }}">
+                                <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
+                                    class="btn sellable-detail-btn position-absolute fs-5 top-0 end-0 me-2 mt-2 rounded-circle"><i
+                                        class="fa-solid fa-magnifying-glass"></i></a>
                             </div>
                         @endif
 
                         {{-- Nome e Descrizione --}}
-                        <div class="card-body py-2">
-                            <h5 class="card-title">{{ $sellable->name }}</h5>
-                            <p class="card-text">{{ $sellable->description }}</p>
+                        <div class="card-body d-flex flex-column py-2">
+                            <h5 class="mt-2">{{ $sellable->name }}</h5>
+                            <small>
+                                @if ($sellable->category)
+                                    {{ $sellable->category->name }}
+                                @endif
+                            </small>
+                            <p class="card-text mt-3 mb-2">{{ $sellable->description }}</p>
                         </div>
 
-                        {{-- Lista --}}
-                        <ul class="list-group list-group-flush mt-auto">
-
-                            {{-- Prezzo --}}
-                            <li class="list-group-item">Prezzo: {{ $sellable->price }} €</li>
-
-                            {{-- Categoria --}}
-                            @if ($sellable->category)
-                                <li class="list-group-item">{{ $sellable->category->name }}</li>
-                            @endif
-                            {{-- Ingredienti --}}
-                            <li class="list-group-item">Ingredienti: {{ $sellable->products->count() }}</li>
-                            
-                            {{-- Dettagli --}}
-                            <li class="list-group-item text-center">
-                                <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
-                                    class="btn btn-outline-primary btn-sm w-100">Dettagli</a>
-                            </li>
-
-                        </ul>
-                        
                         {{-- Bottoni Modifica e Elimina --}}
                         <div class="card-footer d-flex justify-content-between">
-                            <a class="btn btn-outline-success"
-                                href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            <a class="btn modify-btn" href="{{ route('admin.sellables.edit', $sellable) }}">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>
+                            <button type="button" class="btn delete-btn" data-bs-toggle="modal"
                                 data-bs-target="#destroyModal-{{ $sellable->id }}">
-                                Elimina
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
 
@@ -117,7 +106,6 @@
 
                 {{-- Modale Elimina --}}
                 <x-modal.delete-sellable :sellable="$sellable" />
-
             @endforeach
 
             {{-- Nessuno Prodotto --}}
@@ -126,11 +114,14 @@
                     Nessun prodotto corrisponde alla ricerca o alla categoria selezionata.
                 </div>
             @endif
-            
+
         </div>
 
         {{-- Navigazione --}}
-        {{ $sellables->withQueryString()->links() }}
+        <div class="mt-4">
+            {{ $sellables->withQueryString()->links() }}
+        </div>
+        
 
     </div>
 

@@ -39,7 +39,7 @@
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
 
                     {{-- Card --}}
-                    <div class="card h-100  border rounded">
+                    <div class="card border rounded">
 
                         {{-- Numero Tavolo e data e ora ordine --}}
                         <div class="card-header d-flex justify-content-between align-items-center">

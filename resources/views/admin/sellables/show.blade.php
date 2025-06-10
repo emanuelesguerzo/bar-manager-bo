@@ -15,7 +15,7 @@
 
         {{-- Torna indietro --}}
         <div class="mt-4">
-            <a href="{{ route('admin.sellables.index') }}" class="btn btn-secondary mb-3">← Torna indietro</a>
+            <a href="{{ route('admin.sellables.index') }}" class="btn back-btn mb-3">← Torna indietro</a>
         </div>
 
         {{-- Card --}}
@@ -23,27 +23,27 @@
 
             {{-- Immagine --}}
             @if ($sellable->image)
-                <div class="card-header text-center">
-                    <img class="img-fluid rounded" style="max-width: 100%; width: 400px; object-fit: cover;"
+                <div class="card-header p-0 text-center">
+                    <img class="img-fluid" style="max-width: 100%; width: 400px;"
                         src="{{ asset('storage/' . $sellable->image) }}" alt="Immagine della pagina {{ $sellable->name }}">
                 </div>
             @endif
 
             {{-- Nome e Descrizione --}}
             <div class="card-body">
-                <h5 class="card-title">{{ $sellable['name'] }}</h5>
-                <p class="card-text">{{ $sellable['description'] }}</p>
+                <h5>{{ $sellable['name'] }}</h5>
+                <p class="card-text mt-3">{{ $sellable['description'] }}</p>
             </div>
 
             {{-- Lista --}}
             <ul class="list-group list-group-flush">
 
                 {{-- Prezzo --}}
-                <li class="list-group-item">Prezzo: {{ $sellable->price }} €</li>
+                <li class="list-group-item"><strong>Prezzo:</strong> {{ $sellable->price }} €</li>
 
                 {{-- Categoria --}}
                 @if ($sellable->category)
-                    <li class="list-group-item">Categoria: {{ $sellable->category->name }}</li>
+                    <li class="list-group-item"><strong>Categoria:</strong> {{ $sellable->category->name }}</li>
                 @endif
 
                 {{-- Ingredienti --}}
@@ -53,7 +53,7 @@
                         <ul class="mt-2 ps-3">
                             @foreach ($sellable->products as $product)
                                 <li>
-                                    {{ $product->name }} – {{ $product->pivot->quantity }} {{ $product->pivot->unit }}
+                                    {{ $product->name }} - {{ $product->pivot->quantity }} {{ $product->pivot->unit }}
                                 </li>
                             @endforeach
                         </ul>
@@ -66,10 +66,12 @@
 
             {{-- Bottoni Modifica e Elimina --}}
             <div class="card-footer d-flex justify-content-between">
-                <a class="btn btn-outline-success" href="{{ route('admin.sellables.edit', $sellable) }}">Modifica</a>
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                <a class="btn modify-btn" href="{{ route('admin.sellables.edit', $sellable) }}">
+                    <i class="fa-solid fa-pencil"></i>
+                </a>
+                <button type="button" class="btn delete-btn" data-bs-toggle="modal"
                     data-bs-target="#destroyModal-{{ $sellable->id }}">
-                    Elimina
+                    <i class="fa-solid fa-trash-can"></i>
                 </button>
             </div>
 
@@ -77,10 +79,10 @@
 
         {{-- Navigazione --}}
         <div class="d-flex justify-content-between my-4">
-            <a href="{{ route('admin.sellables.show', $previous->slug) }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.sellables.show', $previous->slug) }}" class="btn back-btn">
                 ← {{ $previous->name }}
             </a>
-            <a href="{{ route('admin.sellables.show', $next->slug) }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.sellables.show', $next->slug) }}" class="btn forward-btn">
                 {{ $next->name }} →
             </a>
         </div>

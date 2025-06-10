@@ -12,3 +12,243 @@
 .w-btn {
     width: 120px; 
 }
+
+.card {
+    border: 2px solid goldenrod;
+    color: #ffffff;
+    background-color: #151515;
+}
+
+.list-group-item {
+    color: #ffffff;
+    background-color: transparent;
+    border-color: goldenrod;
+}
+
+.card-footer {
+    border-top: 2px solid goldenrod; 
+}
+
+.card-header {
+    border-bottom: 2px solid goldenrod;
+}
+
+// Layout 
+body {
+    background-color: #151515;
+    color: #ffffff;
+}
+
+h1 {
+    color: #ffffff;
+    font-family: "Edu VIC WA NT Hand Pre", cursive;
+    word-spacing: 0.20em;
+    color: goldenrod;
+}
+
+h5 {
+    color: goldenrod;
+}
+
+.text-muted {
+    color: goldenrod !important;
+}
+
+// Navbar
+.nav-custom {
+    background-color: #000000;
+}
+
+.nav-link {
+  color: #ffffff;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link.active {
+    color: goldenrod !important;
+}
+
+.nav-link:hover {
+  color: goldenrod;
+}
+
+// Navbar destra
+//Hamburger
+.navbar-toggler {
+    border-color: goldenrod;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='goldenrod' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+// Menu' a tendina
+.dropdown-menu {
+    background-color: #151515;
+    border: 1px solid goldenrod;
+}
+
+.dropdown-menu .dropdown-item {
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #222222;
+    color: goldenrod;
+}
+
+.navbar .dropdown-toggle.show {
+    color: goldenrod;
+}
+
+// Bottoni
+.btn-new {
+    background-color: goldenrod;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}
+
+.ingredient-btn,
+.forward-btn,
+.back-btn {
+    border: 1px solid goldenrod;
+    color: #ffffff;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}
+
+.ingredient-btn:hover,
+.forward-btn:hover,
+.back-btn:hover {
+    background-color: #e5bb53;
+    color: #000000;
+    border: 1px solid goldenrod;
+}
+
+.modify-btn {
+    color: #2ECC71;
+    transition: color 0.6s ease-in-out;
+}
+
+.delete-btn {
+    color: #E74C3C;
+    transition: color 0.6s ease-in-out;
+}
+
+.form-select:focus,
+.form-control:focus,
+.form-select,
+.form-control {
+    background-color: #151515;
+    color: #ffffff;
+    border: 1px solid goldenrod;
+}
+
+.form-box,
+.search-box {
+    border: 2px solid goldenrod;
+}
+
+// Input di ricerca
+#category_id,
+#search {
+    background-color: #151515;
+    color: #ffffff;
+    border: 1px solid goldenrod;
+}
+
+.form-control::placeholder,
+#search::placeholder {
+    color: #ffffff;
+}
+
+.search-btn {
+    background-color: #20B2AA;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}
+
+.reset-btn {
+    background-color: #555555;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}
+
+.btn-new:hover {
+    background-color: #dbb146;
+    color: #ffffff;
+}
+
+.search-btn:hover {
+    background-color: #4dc1bb;
+    color: #ffffff;
+}
+.reset-btn:hover {
+    background-color: #8e8d8d;
+    color: #ffffff;
+}
+
+// Dashboard
+.alert-dashboard {
+    border: 2px solid goldenrod;
+}
+
+// Sellables
+.sellable-detail-btn {
+    background-color: goldenrod;
+    transition: background-color 0.7s ease-in-out, color 0.7s ease-in-out;
+}
+
+.sellable-detail-btn:hover {
+    background-color: #dbb146;
+    color: #ffffff;
+}
+
+// Paginazione
+.page-item.active .page-link {
+    background-color: goldenrod;
+    border-color: goldenrod;
+    color: #ffffff;
+}
+
+.page-link {
+    color: goldenrod;
+    background-color: #151515;
+    transition: background-color 0.3s ease;
+}
+
+.page-link:hover {
+    background-color: #dabf5d; 
+    color: black;
+}
+
+.pagination-info {
+    color: goldenrod;
+}
+
+// Accordion
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-item {
+    border: none;
+}
+
+.accordion-button,
+.accordion-item,
+.accordion-button::after {
+    border-radius: 0 !important;
+}
+
+/* Bottone chiuso */
+.accordion-button.collapsed {
+    background-color: #151515;
+    color: goldenrod;
+}
+
+/* Bottone aperto */
+.accordion-button:not(.collapsed) {
+    background-color: goldenrod;
+}
+
+.accordion-body {
+    background-color: #222;
+}

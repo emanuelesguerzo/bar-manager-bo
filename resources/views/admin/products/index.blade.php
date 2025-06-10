@@ -24,8 +24,14 @@
         {{-- Titolo Principale --}}
         <h1 class="my-4">@yield('title')</h1>
 
+        {{-- Aggiungi Nuovo --}}
+        <div class="d-flex justify-content-end my-3">
+            <a class="btn btn-new mb-3" href="{{ route('admin.products.create') }}"><i
+                    class="fa-solid fa-plus me-2"></i>Nuovo</a>
+        </div>
+        
         {{-- Search --}}
-        <form method="GET" action="{{ route('admin.products.index') }}" class="border rounded p-2 mb-4">
+        <form method="GET" action="{{ route('admin.products.index') }}" class="form-box rounded p-2 mb-3">
             <div class="row g-2 align-items-end">
 
                 {{-- Campo ricerca --}}
@@ -37,19 +43,14 @@
 
                 {{-- Bottoni Cerca e Reset --}}
                 <div class="col-md-2 d-flex gap-2">
-                    <button class="btn btn-primary w-100" type="submit">Cerca</button>
+                    <button class="btn search-btn w-100" type="submit">Cerca</button>
                 </div>
                 <div class="col-md-2">
-                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary w-100">Reset</a>
+                    <a href="{{ route('admin.products.index') }}" class="btn reset-btn w-100">Reset</a>
                 </div>
             </div>
         </form>
 
-        {{-- Aggiungi Nuovo --}}
-        <div class="d-flex justify-content-end mb-2">
-            <a class="btn btn-primary mb-3" href="{{ route('admin.products.create') }}"><i
-                    class="fa-solid fa-plus me-2"></i>Nuovo</a>
-        </div>
 
         {{-- Grid --}}
         <div class="row">
@@ -160,9 +161,9 @@
 
                         {{-- Bottoni Modifica e Elimina --}}
                         <div class="card-footer d-flex justify-content-between">
-                            <a class="btn btn-outline-success" href="{{ route('admin.products.edit', $product) }}"><i
+                            <a class="btn modify-btn" href="{{ route('admin.products.edit', $product) }}"><i
                                     class="fa-solid fa-pencil"></i></a>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            <button type="button" class="btn delete-btn" data-bs-toggle="modal"
                                 data-bs-target="#destroyModal-{{ $product->id }}">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
@@ -184,6 +185,8 @@
         </div>
 
         {{-- Paginazione --}}
-        {{ $products->withQueryString()->links() }}
+        <div class="mt-4">
+            {{ $products->withQueryString()->links() }}
+        </div>
     </div>
 @endsection
