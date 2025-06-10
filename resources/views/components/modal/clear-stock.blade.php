@@ -5,9 +5,9 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fs-5" id="clearStockModalLabel-{{ $product->id }}">
+                <h1 class="modal-title fs-5" id="clearStockModalLabel-{{ $product->id }}">
                     Svuota magazzino: {{ $product->name }}
-                </h5>
+                </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
             </div>
             <div class="modal-body">
@@ -15,10 +15,10 @@
                 <p class="mb-0">Questa azione non può essere annullata.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn reset-btn" data-bs-dismiss="modal">Annulla</button>
                 <form method="POST" action="{{ route('admin.products.clearStock', $product) }}">
                     @csrf
-                    <button type="submit" class="btn btn-warning">Conferma svuotamento</button>
+                    <button type="submit" class="btn confirm-delete-btn">Conferma svuotamento</button>
                 </form>
             </div>
         </div>

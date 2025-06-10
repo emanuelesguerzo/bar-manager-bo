@@ -6,14 +6,14 @@
     <div class="container mt-3">
 
         {{-- Bottone Ritorno --}}
-        <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary mt-3">
+        <a href="{{ route('admin.products.index') }}" class="btn back-btn mt-3">
             <i class="fa-solid fa-arrow-left me-2"></i> Torna indietro
         </a>
 
         {{-- Titolo Pagina --}}
         <h1 class="my-4">@yield('title')</h1>
 
-        <form class="border rounded p-3" method="POST" action="{{ route('admin.products.update', $product) }}"
+        <form class="form-box rounded p-3 mb-5" method="POST" action="{{ route('admin.products.update', $product) }}"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -97,13 +97,13 @@
                 <label for="stock_alert_threshold" class="form-label label-required">Soglia alert magazzino</label>
                 <input type="number" name="stock_alert_threshold" id="stock_alert_threshold" class="form-control"
                     value="{{ old('stock_alert_threshold', $product->stock_alert_threshold) }}" min="1" required>
-                <div class="form-text">Invia un alert nella dashboard quando le unità in magazzino scendono a questo
+                <div class="form-text text-muted">Invia un alert nella dashboard quando le unità in magazzino scendono a questo
                     valore.</div>
             </div>
 
             {{-- Submit --}}
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success w-100">Salva</button>
+                <button type="submit" class="btn btn-new w-100">Salva</button>
             </div>
 
         </form>

@@ -1,11 +1,11 @@
 <section>
     <header>
-        <h2 class="text-secondary">
-            {{ __('Profile Information') }}
+        <h2>
+            {{ __('Informazioni Profilo') }}
         </h2>
 
         <p class="mt-1 text-muted">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ __("Aggiorna le informazioni del profilo e l'indirizzo email del tuo account.") }}
         </p>
     </header>
 
@@ -18,7 +18,7 @@
         @method('patch')
 
         <div class="mb-2">
-            <label for="name">{{__('Name')}}</label>
+            <label class="mb-1" for="name">{{__('Nome')}}</label>
             <input class="form-control" type="text" name="name" id="name" autocomplete="name" value="{{old('name', $user->name)}}" required autofocus>
             @error('name')
             <span class="invalid-feedback" role="alert">
@@ -27,8 +27,8 @@
             @enderror
         </div>
 
-        <div class="mb-2">
-            <label for="email">
+        <div class="mb-4">
+            <label class="mb-1" for="email">
                 {{__('Email') }}
             </label>
 
@@ -60,7 +60,7 @@
         </div>
 
         <div class="d-flex align-items-center gap-4">
-            <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
+            <button class="btn btn-new w-100" type="submit">{{ __('Salva modifiche') }}</button>
 
             @if (session('status') === 'profile-updated')
             <script>
@@ -71,7 +71,7 @@
                     el.style.display = 'block';
                 }
             </script>
-            <p id='profile-status' class="fs-5 text-muted">{{ __('Saved.') }}</p>
+            <p id='profile-status' class="fs-5 text-muted">{{ __('Salvate.') }}</p>
             @endif
         </div>
     </form>

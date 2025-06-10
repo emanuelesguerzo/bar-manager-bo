@@ -13,13 +13,14 @@
             </div>
         @endif
 
-        {{-- Titolo Principale --}}
-        <h1 class="my-4">@yield('title')</h1>
+        <div
+            class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between my-4 gap-2">
+            {{-- Titolo Principale --}}
+            <h1 class="m-0">@yield('title')</h1>
 
-        {{-- Aggiungi Nuovo --}}
-        <div class="d-flex justify-content-end my-3">
-            <a class="btn btn-new" href="{{ route('admin.sellables.create') }}"><i
-                    class="fa-solid fa-plus me-2"></i>Nuovo</a>
+            {{-- Aggiungi Nuovo --}}
+            <a class="btn btn-new ms-auto mt-2 mt-md-0" href="{{ route('admin.sellables.create') }}"><i
+                class="fa-solid fa-plus me-2"></i>Nuovo</a>
         </div>
 
         {{-- Ricerca --}}
@@ -74,7 +75,7 @@
                                     src="{{ asset('storage/' . $sellable->image) }}"
                                     alt="Immagine della pagina {{ $sellable->name }}">
                                 <a href="{{ route('admin.sellables.show', $sellable->slug) }}"
-                                    class="btn sellable-detail-btn position-absolute fs-5 top-0 end-0 me-2 mt-2 rounded-circle"><i
+                                    class="btn btn-new position-absolute top-0 end-0 me-2 mt-2 rounded-circle"><i
                                         class="fa-solid fa-magnifying-glass"></i></a>
                             </div>
                         @endif
@@ -118,10 +119,10 @@
         </div>
 
         {{-- Navigazione --}}
-        <div class="mt-4">
+        <div class="mt-3 mb-2">
             {{ $sellables->withQueryString()->links() }}
         </div>
-        
+
 
     </div>
 

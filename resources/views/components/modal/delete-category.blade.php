@@ -12,11 +12,11 @@
                 <p class="mb-0">Questa azione non può essere annullata.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn reset-btn" data-bs-dismiss="modal">Annulla</button>
                 <form action="{{ route('admin.categories.destroy', $category) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" class="btn btn-danger" value="Elimina">
+                    <input type="submit" class="btn confirm-delete-btn" value="Elimina">
                 </form>
             </div>
         </div>

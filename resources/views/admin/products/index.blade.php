@@ -21,15 +21,18 @@
             </div>
         @endif
 
-        {{-- Titolo Principale --}}
-        <h1 class="my-4">@yield('title')</h1>
+        <div
+            class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between my-4 gap-2">
 
-        {{-- Aggiungi Nuovo --}}
-        <div class="d-flex justify-content-end my-3">
-            <a class="btn btn-new mb-3" href="{{ route('admin.products.create') }}"><i
-                    class="fa-solid fa-plus me-2"></i>Nuovo</a>
+            {{-- Titolo Principale --}}
+            <h1 class="m-0">@yield('title')</h1>
+
+            {{-- Aggiungi Nuovo --}}
+            <a class="btn btn-new ms-auto mt-2 mt-md-0" href="{{ route('admin.products.create') }}">
+                <i class="fa-solid fa-plus me-2"></i>Nuovo
+            </a>
         </div>
-        
+
         {{-- Search --}}
         <form method="GET" action="{{ route('admin.products.index') }}" class="form-box rounded p-2 mb-3">
             <div class="row g-2 align-items-end">
@@ -65,11 +68,18 @@
                             </div>
                         @endif
 
-                        <div class="card-body py-2">
-                            <h5 class="card-title mb-0">{{ $product->name }}</h5>
-                            @if ($product->brand)
-                                <small class="text-muted">{{ $product->brand }}</small>
-                            @endif
+                        <div class="card-body d-flex align-items-center justify-content-between py-2">
+                            <div>
+                                <h5 class="card-title mb-0">{{ $product->name }}</h5>
+                                @if ($product->brand)
+                                    <small class="text-muted">{{ $product->brand }}</small>
+                                @endif
+                            </div>
+                            <div>
+                                <a href="{{ route('admin.products.show', $product->slug) }}"
+                                    class="btn btn-new btn-sm rounded-circle"><i
+                                        class="fa-solid fa-magnifying-glass"></i></a>
+                            </div>
                         </div>
 
                         <ul class="list-group list-group-flush mt-auto">
@@ -81,27 +91,25 @@
                                     <span class="text-muted">/ {{ $product->unit_size_g }} g</span>
                                 @endif
                             </li>
-                            <li class="list-group-item"><strong>In magazzino:</strong> {{ $product->units_in_stock }} unità
+                            <li class="list-group-item">
+                                <strong>In magazzino:</strong> <span
+                                    class="text-muted">{{ $product->units_in_stock }} unità</span>
                             </li>
                             {{-- Stock e unità se presenti --}}
                             @if ($product->stock_ml)
-                                <li class="list-group-item"><strong>Stock:</strong> {{ $product->stock_ml }} ml</li>
+                                <li class="list-group-item"><strong>Stock:</strong> <span
+                                        class="text-muted">{{ $product->stock_ml }} ml</span></li>
                             @endif
 
                             @if ($product->stock_g)
-                                <li class="list-group-item"><strong>Stock:</strong> {{ $product->stock_g }} g</li>
+                                <li class="list-group-item"><strong>Stock:</strong> <span
+                                        class="text-muted">{{ $product->stock_g }} g</span></li>
                             @endif
 
-                            <li class="list-group-item">
+                            {{-- <li class="list-group-item">
                                 <strong>Fornitore:</strong>
                                 {{ $product->supplier?->name ?? '—' }}
-                            </li>
-
-                            {{-- Dettagli Prodotto --}}
-                            <li class="list-group-item text-center">
-                                <a href="{{ route('admin.products.show', $product->slug) }}"
-                                    class="btn btn-outline-primary btn-sm w-100">Dettagli</a>
-                            </li>
+                            </li> --}}
 
                             {{-- Carico e scarico merce magazzino --}}
                             <li class="list-group-item p-0">
@@ -125,8 +133,8 @@
                                                     @csrf
                                                     <div class="input-group">
                                                         <input type="number" name="new_units" min="1"
-                                                            class="form-control flex-grow-1" placeholder="Aggiungi unità">
-                                                        <button class="btn btn-success w-btn">+ Aggiungi</button>
+                                                            class="form-control flex-grow-1" placeholder="Unità">
+                                                        <button class="btn add-btn w-btn">+ Aggiungi</button>
                                                     </div>
                                                 </form>
 
@@ -137,8 +145,8 @@
                                                     <div class="input-group">
                                                         <input type="number" name="remove_units" min="1"
                                                             max="{{ $product->units_in_stock }}"
-                                                            class="form-control flex-grow-1" placeholder="Scarica unità">
-                                                        <button class="btn btn-danger w-btn">- Scarica</button>
+                                                            class="form-control flex-grow-1" placeholder="Unità">
+                                                        <button class="btn confirm-delete-btn w-btn">- Scarica</button>
                                                     </div>
                                                 </form>
 
@@ -146,7 +154,8 @@
                                                 <form method="POST"
                                                     action="{{ route('admin.products.clearStock', $product) }}">
                                                     @csrf
-                                                    <button type="button" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal"
+                                                    <button type="button" class="btn confirm-delete-btn w-100 mt-2"
+                                                        data-bs-toggle="modal"
                                                         data-bs-target="#clearStockModal-{{ $product->id }}">
                                                         <i class="fa-solid fa-arrows-rotate me-2"></i> Scarico completo
                                                     </button>
@@ -175,7 +184,6 @@
                 {{-- Modali --}}
                 <x-modal.delete-product :product="$product" />
                 <x-modal.clear-stock :product="$product" />
-
             @endforeach
             @if ($products->isEmpty())
                 <div class="alert alert-warning text-center my-4">
@@ -185,7 +193,7 @@
         </div>
 
         {{-- Paginazione --}}
-        <div class="mt-4">
+        <div class="mt-3 mb-2">
             {{ $products->withQueryString()->links() }}
         </div>
     </div>

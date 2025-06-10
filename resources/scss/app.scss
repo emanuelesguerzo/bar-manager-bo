@@ -46,6 +46,10 @@ h1 {
     color: goldenrod;
 }
 
+h2 {
+    color: #ffffff;
+}
+
 h5 {
     color: goldenrod;
 }
@@ -73,7 +77,7 @@ h5 {
 }
 
 // Navbar destra
-//Hamburger
+/* Hamburger */
 .navbar-toggler {
     border-color: goldenrod;
 }
@@ -82,7 +86,7 @@ h5 {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='goldenrod' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-// Menu' a tendina
+/* Menu' a tendina */
 .dropdown-menu {
     background-color: #151515;
     border: 1px solid goldenrod;
@@ -129,9 +133,33 @@ h5 {
     transition: color 0.6s ease-in-out;
 }
 
+.add-btn {
+    background-color: #0bb351;
+    color: #ffffff;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}
+
+.add-btn:hover {
+    background-color: #08a84b;
+    color: #000000;
+}
+
 .delete-btn {
     color: #E74C3C;
     transition: color 0.6s ease-in-out;
+}
+
+
+
+.confirm-delete-btn {
+    background-color: #E74C3C;
+    color: #ffffff;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #eb240e;
+    color: #000000;
 }
 
 .form-select:focus,
@@ -162,12 +190,12 @@ h5 {
 }
 
 .search-btn {
-    background-color: #20B2AA;
+    background-color: #2ECC71;
     transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
 .reset-btn {
-    background-color: #555555;
+    background-color: #434343;
     transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
@@ -177,12 +205,11 @@ h5 {
 }
 
 .search-btn:hover {
-    background-color: #4dc1bb;
-    color: #ffffff;
+    background-color: #54d188;
 }
 .reset-btn:hover {
     background-color: #8e8d8d;
-    color: #ffffff;
+
 }
 
 // Dashboard
@@ -251,4 +278,35 @@ h5 {
 
 .accordion-body {
     background-color: #222;
+}
+
+// MODALS
+/* Contenitore del modale */
+.modal-content {
+    background-color: #151515; 
+    border: 2px solid goldenrod;
+    color: white; 
+}
+
+/* Header con titolo */
+.modal-header {
+    border-bottom: 1px solid goldenrod;
+    background-color: #151515;
+    color: goldenrod;
+}
+
+/* Titolo del modale */
+.modal-title {
+    color: goldenrod;
+}
+
+/* Testo specifico da rendere bianco */
+.modal-body p {
+    color: white;
+}
+
+/* Footer con pulsanti */
+.modal-footer {
+    background-color: #151515;
+    border-top: 1px solid goldenrod;
 }
