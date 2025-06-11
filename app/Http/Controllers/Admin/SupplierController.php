@@ -61,6 +61,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
+        // Otteniamo i prodotti associati al fornitore
         $products = $supplier->products()->orderBy("name")->get();
 
         return view("admin.suppliers.show", compact("supplier", "products"));

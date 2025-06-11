@@ -56,6 +56,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        // Prelevo i prodotti della categoria in ordine di nome
         $sellables = $category->sellables()->orderBy("name")->get();
 
         return view("admin.categories.show", compact("category", "sellables"));
@@ -75,12 +76,14 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
+            // $category->id ci permette di salvare il nome anche se e' uguale a quello prima
             "name" => "required|string|max:255|unique:categories,name," . $category->id,
             "description" => "nullable|string",
         ]);
 
         $data = $request->all();
 
+        // Update alla slug solo se cambia il nome
         if ($category->name !== $data["name"]) {
             $category->slug = Str::slug($data["name"]);
         }
@@ -98,6 +101,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // Errore in caso si voglia cancellare una categoria che ha prodotti associati
         if ($category->sellables()->count() > 0) {
             return redirect()->back()->with("error", "Non puoi eliminare una categoria che ha prodotti associati.");
         }

@@ -79,6 +79,7 @@ class SellableController extends Controller
 
         $newSellable->save();
 
+        // Costruisce un array se gli ingredienti sono presenti per la tabella ponte
         $ingredients = [];
 
         if (isset($data['product_id'])) {

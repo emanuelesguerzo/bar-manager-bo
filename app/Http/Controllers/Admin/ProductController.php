@@ -19,6 +19,7 @@ class ProductController extends Controller
         $suppliers = Supplier::all();
         $query = Product::query();
 
+        // Filtro per nome o brand usando una closure per raggruppare correttamente le condizioni
         if ($search = $request->input("search")) {
             $query->where(function ($q) use ($search) {
                 $q->where("name", "like", "%$search%")->orWhere("brand", "like", "%$search%");
@@ -141,11 +142,13 @@ class ProductController extends Controller
 
         $data = $request->all();
 
+        
+        $product->name = $data["name"];
+        
         if ($product->name !== $data["name"]) {
             $product->slug = Str::slug($data["name"]);
         }
 
-        $product->name = $data["name"];
         $product->brand = $data["brand"];
         $product->price = $data["price"];
         $product->stock_alert_threshold = $data['stock_alert_threshold'];
@@ -161,6 +164,7 @@ class ProductController extends Controller
             // Pulizia campi alternativi
             $product->unit_size_g = null;
             $product->stock_g = null;
+
         } elseif ($data["stock_unit"] === "g") {
 
             // Calcolo solo se la quantità è cambiata
@@ -256,8 +260,10 @@ class ProductController extends Controller
             return redirect()->back()->with('error', "Non puoi rimuovere più unità di quelle presenti in magazzino!");
         }
 
+        // Rimuovo unità al conteggio esistente
         $product->units_in_stock -= $removeUnits;
 
+        // Aggiorno stock_ml o stock_g a seconda del tipo
         if ($product->unit_size_ml) {
             $product->stock_ml -= $removeUnits * $product->unit_size_ml;
         } elseif ($product->unit_size_g) {

@@ -81,6 +81,7 @@
                                             aria-labelledby="heading-{{ $product->id }}"
                                             data-bs-parent="#accordion-{{ $product->id }}">
                                             <div class="accordion-body">
+                                                
                                                 {{-- Aggiungi stock --}}
                                                 <form method="POST"
                                                     action="{{ route("admin.products.addStock", $product) }}"
@@ -134,6 +135,8 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Modale --}}
                 <x-modal.delete-product :product="$product" />
             
             {{-- Lista vuota --}}

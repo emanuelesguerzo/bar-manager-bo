@@ -11,8 +11,8 @@ class SellableController extends Controller
     public function index() {
 
         $sellables = Sellable::where("is_visible", true)
-        ->with(["category"])
-        ->get();
+            ->with(["category"])
+            ->get();
 
         return response()->json(
             [
