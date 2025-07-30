@@ -37,6 +37,7 @@ Route::middleware(["auth", "verified"])
         Route::resource("suppliers", SupplierController::class);
         Route::resource("products", ProductController::class);
         Route::resource("orders", OrderController::class);
+        
 
         // Aggiunta e rimozione prodotti in magazzino
         Route::post("/products/{product}/add-stock", [ProductController::class, "addStock"])->name("products.addStock");

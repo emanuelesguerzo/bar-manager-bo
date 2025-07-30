@@ -13,7 +13,7 @@
                 <ul class="mb-0">
                     @foreach ($lowStockProducts as $product)
                         <li class="mb-1">
-                            {{ $product->name }} - <strong class="text-muted">{{ $product->units_in_stock }}</strong> unità rimaste
+                            {{ $product->name }} - <strong class="text-muted">{{ $product->units_in_stock }}</strong> unità
                         </li>
                     @endforeach
                 </ul>
