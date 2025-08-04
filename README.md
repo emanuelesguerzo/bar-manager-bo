@@ -1,8 +1,17 @@
-# Bar Manager (Back Office)
+# Bar Manager Backend
 
-Bar Manager BO is a web-based application for bar inventory and operations management. It provides a back-office interface to manage products (inventory items like beverages and ingredients), suppliers, menu items (referred to as “sellables”), and orders, helping bar managers track stock levels and streamline inventory control. The system is built with Laravel (PHP framework) and offers features such as low-stock alerts, recipe management for drinks, and automatic stock deduction when drinks are sold. In essence, Bar Manager BO facilitates efficient bar management by combining inventory tracking with menu (recipe) management and order logging.
+Bar Manager BO is a web-based application for managing bar inventory and operations. It allows staff to manage products (like beverages and ingredients), suppliers, menu items (referred to as “sellables”), and orders from an admin panel.
 
-***
+This backend is designed to work in tandem with the companion frontend project [bar-manager-fo](https://github.com/emanuelesguerzo/bar-manager-fo), which acts as the customer-facing digital menu. 
+Orders placed through the frontend are received and processed here, with automatic stock deduction based on the defined ingredients.
+
+## Overview
+
+This project provides the backend logic and data management for the Bar Manager platform. It handles inventory tracking, recipe management, order processing, and API communication with the frontend. Sellable items are linked to real inventory products through recipes, allowing the system to deduct stock quantities automatically whenever an order is placed.
+
+The Bar Manager Backend exposes RESTful API endpoints that the Bar Manager Frontend [bar-manager-fo](https://github.com/emanuelesguerzo/bar-manager-fo) consumes to retrieve product data and submit customer orders. This setup ensures that real-time inventory updates are always in sync with customer activity at the bar.
+
+---
 
 ### Key Features
 
@@ -106,6 +115,12 @@ After installation, run the application:
 and in another terminal:
 
     npm run dev
+
+---
+
+### Related Projects
+
+- [Bar Manager Frontend](https://github.com/emanuelesguerzo/bar-manager-fo) - Digital menu interface connected to this backend
 
 ---
 
